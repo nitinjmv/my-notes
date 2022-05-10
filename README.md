@@ -1,4 +1,3 @@
 # interview-questions
 
-[Java](java.md)
-aa
+[Java](development/java.md)
