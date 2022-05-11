@@ -1,5 +1,14 @@
-Basics
-------
+<span id="top"></span>
+
+[Basics](#Basics)
+
+[Collections](#Collections)
+
+[Threading/Concurrency](#Concurrency)
+
+Basics <span id="Basics"></span> 
+--------------------------------
+[Back](#top)
 
 **Oops Concepts**
 
@@ -335,8 +344,9 @@ Functional interfaces are usually annotated with the @FunctionalInterface annota
 
 **Answer:**
 
-Collection
-----------
+Collections <span id="Collections"></span>
+------------------------------------------
+[Back](#top)
 
 **Queue vs PriorityQueue**
 
@@ -631,8 +641,9 @@ assertTrue(string1.equals(string2));
 
 **Answer:**
 
-Threading/Concurrency
----------------------
+Threading/Concurrency <span id="Concurrency"></span>
+----------------------------------------------------
+[Back](#top)
 
 **Runnable vs Callable**
 
