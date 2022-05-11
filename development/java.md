@@ -1,8 +1,8 @@
 Basics
 ------
-<HR>
 
 **Oops Concepts**
+
 - Encapsulation - data hiding, e.g. variables can be hidden.
 - Abstraction - hiding implementation details e.g. Interface.
 - Polymorphism - Many name e.g. method overloading & overriding.
@@ -24,6 +24,7 @@ A final variable is a variable that may be assigned (and has to be assigned) onl
 One of the prominent use cases of a default method is adding a method to an existing interface. If you don't mark such interface method as default, then all existing implementations of this interface will break. Adding a method with a default implementation ensures binary compatibility of legacy code with the new version of this interface.
 
 A good example of this is the Iterator interface which allows a class to be a target of the for-each loop. This interface first appeared in Java 5, but in Java 8 it received two additional methods, forEach, and spliterator. They are defined as default methods with implementations and thus do not break backward compatibility:
+
 ```
 public interface Iterable<T> {
 
@@ -81,6 +82,7 @@ public class Discount {
 Overloading of a method happens in the same class. Overloading occurs when you create a method with the same name but with different types or number of arguments. This allows you to execute a certain code depending on the types of arguments you provide, while the name of the method remains the same.
 
 Here's an example of overloading in the java.io.Writer abstract class. The following methods are both named write, but one of them receives an int while another receives a char array.
+
 ```
 public abstract class Writer {
 
@@ -134,10 +136,10 @@ A static initializer block is a curly-braced block of code with the static modif
 
 **Question:** Q12. What Is a Singleton and How Can It Be Implemented in Java?
 
-
 **Answer:** Singleton is a pattern of object-oriented programming. A singleton class may only have one instance, usually globally visible and accessible.
 
 There are multiple ways of creating a singleton in Java. The following is the most simple example with a static field that is initialized in-place. The initialization is thread-safe because static fields are guaranteed to be initialized in a thread-safe manner. The constructor is private, so there is no way for outer code to create more than one instance of the class.
+
 ```
 public class SingletonExample {
 
@@ -150,6 +152,7 @@ public class SingletonExample {
     }
 }
 ```
+
 But this approach could have a serious drawback — the instance would be instantiated when this class is first accessed. If initialization of this class is a heavy operation, and we would probably like to defer it until the instance is actually needed (possibly never), but at the same time keep it thread-safe. In this case, we should use a technique known as double-checked locking.
 
 **Question:** What Is a Var-Arg? What Are the Restrictions on a Var-Arg? How Can You Use It Inside the Method Body?
@@ -157,6 +160,7 @@ But this approach could have a serious drawback — the instance would be instan
 **Answer:** Var-arg is a variable-length argument for a method. A method may have only one var-arg, and it has to come last in the list of arguments. It is specified as a type name followed by an ellipsis and an argument name. Inside the method body, a var-arg is used as an array of specified type.
 
 Here's an example from the standard library — the Collections.addAll method that receives a collection, a variable number of elements, and adds all elements to the collection:
+
 ```
 public static <T> boolean addAll(
   Collection<? super T> c, T... elements) {
@@ -166,21 +170,24 @@ public static <T> boolean addAll(
     return result;
 }
 ```
-**Question:** Q14. Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?
 
+**Question:** Q14. Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?
 
 **Answer:** To access an overridden method of a superclass, you can use the super keyword. But you don't have a similar way of accessing the overridden method of a super-superclass.
 
 As an example from the standard library, LinkedHashMap class extends HashMap and mostly re-uses its functionality, adding a linked list over its values to preserve iteration order. LinkedHashMap re-uses the clear method of its superclass and then clears head and tail references of its linked list:
+
 ```
 public void clear() {
     super.clear();
     head = tail = null;
 }
 ```
+
 **Question:** What New Features Were Added in Java 8?
 
-**Answer:** 
+**Answer:**
+
 - Lambda Expressions − a new language feature allowing us to treat actions as objects
 - Method References − enable us to define Lambda Expressions by referring to methods directly using their names
 - Optional − special wrapper class used for expressing optionality
@@ -193,31 +200,38 @@ Along with these new features, lots of feature enhancements are done under the h
 
 **Question:** Q1. What Is a Method Reference?
 
-
 **Answer:** A method reference is a Java 8 construct that can be used for referencing a method without invoking it. It's used for treating methods as Lambda Expressions. They only work as syntactic sugar to reduce the verbosity of some lambdas. This way the following code:
+
 ```
 (o) -> o.toString();
 ```
+
 Can become:
+
 ```
 Object::toString();
 ```
+
 A method reference can be identified by a double colon separating a class or object name, and the name of the method. It has different variations, such as constructor reference:
+
 ```
 String::new;
 ```
 
 Static method reference:
+
 ```
 String::valueOf;
 ```
 
 Bound instance method reference:
+
 ```
 str::toString;
 ```
 
 Unbound instance method reference:
+
 ```
 String::toString;
 ```
@@ -226,10 +240,7 @@ String::toString;
 
 **Answer:** It's a static method reference to the valueOf method of the String class.
 
-
-
 **Question:** Q1. What Is Optional? How Can It Be Used?
-
   
 **Answer:** Optional is a new class in Java 8 that encapsulates an optional value, i.e. a value that is either there or not. It's a wrapper around an object, and we can think of it as a container of zero or one element.
 
@@ -240,6 +251,7 @@ The main purpose of Optional, as designed by its creators, is to be a return typ
 For instance, the Stream.min() method calculates the minimum value in a stream of values. But what if the stream is empty? If it wasn't for Optional, the method would return null or throw an exception.
 
 However, it returns an Optional value, which may be Optional.empty() (the second case). This allows us to easily handle such cases:
+
 ```
 int min1 = Arrays.stream(new int[]{1, 2, 3, 4, 5})
   .min()
@@ -281,6 +293,7 @@ Where an instance of such an interface is required, a Lambda Expression can be u
 The arguments and return type of such an expression directly match those of the single abstract method.
 
 For instance, the Runnable interface is a functional interface, so instead of:
+
 ```
 Thread thread = new Thread(new Runnable() {
     public void run() {
@@ -322,10 +335,8 @@ Functional interfaces are usually annotated with the @FunctionalInterface annota
 
 **Answer:**
 
-
 Collection
 ----------
-<HR>
 
 **Queue vs PriorityQueue**
 
@@ -411,8 +422,6 @@ For instance, to store an int value, a 32-bit memory cell can be used. Reference
 
 The size of an object header can be quite significant in relation to a simple numeric value size. This is why the primitive types were introduced in the first place — to save space on object overhead. The downside is that not everything in Java technically is an object — primitive values do not inherit from Object class.
 
-
-
 **Question:** Describe the Different Primitive Types and the Amount of Memory They Occupy.
 
 **Answer:** Java has 8 primitive types:
@@ -425,7 +434,7 @@ The size of an object header can be quite significant in relation to a simple nu
 - long — signed 64-bit value,
 - float — 32-bit single precision floating point value corresponding to the IEEE 754 standard,
 - double — 64-bit double precision floating point value corresponding to the IEEE 754 standard.
- 
+
 **Question:** What Is the Difference Between an Abstract Class and an Interface? What Are the Use Cases of One and the Other?
 
 **Answer:** An abstract class is a class with the abstract modifier in its definition. It can't be instantiated, but it can be subclassed. The interface is a type described with interface keyword. It also cannot be instantiated, but it can be implemented.
@@ -478,6 +487,7 @@ OuterClass1.InnerClass innerClass = outerClass1.new InnerClass();
 Static nested class is quite different. Syntactically it is just a nested class with the static modifier in its definition.
 
 In practice, it means that this class may be instantiated as any other class, without binding it to any instance of the enclosing class:
+
 ```
 public class OuterClass2 {
 
@@ -518,9 +528,7 @@ int value = list.get(0);
 
 ```
 
-
 **Question:** Describe the Difference Between equals() and ==
-
 
 **Answer:** The == operator allows you to compare two objects for “sameness” (i.e. that both variables refer to the same object in memory). It is important to remember that the new keyword always creates a new object which will not pass the == equality with any other object, even if they seem to have the same value:
 
@@ -530,16 +538,20 @@ String string2 = new String("Hello");
 
 assertFalse(string1 == string2);
 ```
+
 Also, the == operator allows to compare primitive values:
+
 ```
 int i1 = 5;
 int i2 = 5;
 
 assertTrue(i1 == i2);
 ```
+
 The equals() method is defined in the java.lang.Object class and is, therefore, available for any reference type. By default, it simply checks that the object is the same via the == operator. But it is usually overridden in subclasses to provide the specific semantics of comparison for a class.
 
 For instance, for String class this method checks if the strings contain the same characters:
+
 ```
 String string1 = new String("Hello");
 String string2 = new String("Hello");
@@ -621,6 +633,7 @@ assertTrue(string1.equals(string2));
 
 Threading/Concurrency
 ---------------------
+
 **Runnable vs Callable**
 
 The Runnable interface has a single run method. It represents a unit of computation that has to be run in a separate thread. The Runnable interface does not allow this method to return value or to throw unchecked exceptions.
@@ -643,12 +656,14 @@ The Callable interface has a single call method and represents a task that has a
 **Answer:** A daemon thread is a thread that does not prevent JVM from exiting. When all non-daemon threads are terminated, the JVM simply abandons all remaining daemon threads. Daemon threads are usually used to carry out some supportive or service tasks for other threads, but you should take into account that they may be abandoned at any time.
 
 To start a thread as a daemon, you should use the setDaemon() method before calling start():
+
 ```
 Thread daemon = new Thread(()
   -> System.out.println("Hello from daemon!"));
 daemon.setDaemon(true);
 daemon.start();
 ```
+
 Curiously, if you run this as a part of the main() method, the message might not get printed. This could happen if the main() thread would terminate before the daemon would get to the point of printing the message. You generally should not do any I/O in daemon threads, as they won't even be able to execute their finally blocks and close the resources if abandoned.
 
 **Question:** What Is the Thread’s Interrupt Flag? How Can You Set and Check It? How Does It Relate to the Interruptedexception?
@@ -696,7 +711,7 @@ The main notions of JMM are:
 - Synchronization Order (SO), the total order between all synchronization actions — it has to be consistent with Program Order, that is, if two synchronization actions come one before another in PO, they occur in the same order in SO
 
 - synchronizes-with (SW) relation between certain synchronization actions, like unlocking of monitor and locking of the same monitor (in another or the same thread)
-Happens-before Order — combines PO with SW (this is called transitive closure in set theory) to create a partial ordering of all actions between threads. If one action 
+Happens-before Order — combines PO with SW (this is called transitive closure in set theory) to create a partial ordering of all actions between threads. If one action
 
 - happens-before another, then the results of the first action are observable by the second action (for instance, write of a variable in one thread and read in another)
 Happens-before consistency — a set of actions is HB-consistent if every read observes either the last write to that location in the happens-before order, or some other write via data race
@@ -714,7 +729,8 @@ Another guarantee for volatile is atomicity of writing and reading 64-bit values
 
 **Question:** Which of the Following Operations Are Atomic?
 
-**Answer:** 
+**Answer:**
+
 - writing to a non-volatile int;
 - writing to a volatile int;
 - writing to a non-volatile long;
@@ -733,23 +749,29 @@ This is why, when creating an immutable object, you should always make all its f
 **Question:** What Is the Meaning of a Synchronized Keyword in the Definition of a Method? of a Static Method? Before a Block?
 
 **Answer:** The synchronized keyword before a block means that any thread entering this block has to acquire the monitor (the object in brackets). If the monitor is already acquired by another thread, the former thread will enter the BLOCKED state and wait until the monitor is released.
+
 ```
 synchronized(object) {
     // ...
 }
 ```
+
 A synchronized instance method has the same semantics, but the instance itself acts as a monitor.
+
 ```
 synchronized void instanceMethod() {
     // ...
 }
 ```
+
 For a static synchronized method, the monitor is the Class object representing the declaring class.
+
 ```
 static synchronized void staticMethod() {
     // ...
 }
 ```
+
 **Question:** If Two Threads Call a Synchronized Method on Different Object Instances Simultaneously, Could One of These Threads Block? What If the Method Is Static?
 
 **Answer:** If the method is an instance method, then the instance acts as a monitor for the method. Two threads calling the method on different instances acquire different monitors, so none of them gets blocked.
@@ -763,6 +785,7 @@ If the method is static, then the monitor is the Class object. For both threads,
 When another thread that acquired the monitor fulfills the condition, it may call object.notify() or object.notifyAll() and release the monitor. The notify method awakes a single thread in the waiting state, and the notifyAll method awakes all threads that wait for this monitor, and they all compete for re-acquiring the lock.
 
 The following BlockingQueue implementation shows how multiple threads work together via the wait-notify pattern. If we put an element into an empty queue, all threads that were waiting in the take method wake up and try to receive the value. If we put an element into a full queue, the put method waits for the call to the get method. The get method removes an element and notifies the threads waiting in the put method that the queue has an empty place for a new item.
+
 ```
 public class BlockingQueue<T> {
 
@@ -796,9 +819,11 @@ public class BlockingQueue<T> {
     
 }
 ```
+
 **Question:** Describe the Conditions of Deadlock, Livelock, and Starvation. Describe the Possible Causes of These Conditions.
 
-**Answer:** 
+**Answer:**
+
 - Deadlock is a condition within a group of threads that cannot make progress because every thread in the group has to acquire some resource that is already acquired by another thread in the group. The most simple case is when two threads need to lock both of two resources to progress, the first resource is already locked by one thread, and the second by another. These threads will never acquire a lock to both resources and thus will never progress.
 
 - Livelock is a case of multiple threads reacting to conditions, or events, generated by themselves. An event occurs in one thread and has to be processed by another thread. During this processing, a new event occurs which has to be processed in the first thread, and so on. Such threads are alive and not blocked, but still, do not make any progress because they overwhelm each other with useless work.
@@ -811,20 +836,20 @@ public class BlockingQueue<T> {
 
 The fork/join framework entry point is the ForkJoinPool class which is an implementation of ExecutorService. It implements the work-stealing algorithm, where idle threads try to “steal” work from busy threads. This allows to spread the calculations between different threads and make progress while using fewer threads than it would require with a usual thread pool.
 
-**Question:** 
+**Question:**
 
-**Answer:** 
+**Answer:**
 
-**Question:** 
+**Question:**
 
-**Answer:** 
+**Answer:**
 
-**Question:** 
+**Question:**
 
-**Answer:** 
+**Answer:**
 
-**Question:** 
+**Question:**
 
-**Answer:** 
+**Answer:**
 Others
 ------
