@@ -33,6 +33,7 @@ Notice that the packaging element in the pom.xml file must be set to jar to buil
 If we don't include this element, it also defaults to jar.
 
 **Actuator**
+
 This features allow us to monitor and manage applications when they're running in production.
 
 Spring Boot Actuator can expose operational information using either HTTP or JMX endpoints. But most applications go for HTTP, where the identity of an endpoint and the /actuator prefix form a URL path.
