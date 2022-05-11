@@ -6,8 +6,9 @@
 
 [Threading/Concurrency](#Concurrency)
 
-Basics <span id="Basics"></span> 
+Basics <span id="Basics"></span>
 --------------------------------
+
 [Back](#top)
 
 **Oops Concepts**
@@ -326,19 +327,23 @@ The reasoning behind major implementation choice is simple – preserving backwa
 - Replace bounded types (More on these in a later question) with the first bound class
 - Insert the equivalent of casts when retrieving generic objects.
 It's important to understand type erasure. Otherwise, a developer might get confused and think they'd be able to get the type at runtime:
+
 ```
 public foo(Consumer<T> consumer) {
    Type type = consumer.getGenericTypeParameter()
 }
 ```
+
 The above example is a pseudo code equivalent of what things might look like without type erasure, but unfortunately, it is impossible. Once again, the generic type information is not available at runtime.
 
 **Question:** If a Generic Type Is Omitted When Instantiating an Object, Will the Code Still Compile?
 
 **Answer:** As generics did not exist before Java 5, it is possible not to use them at all. For example, generics were retrofitted to most of the standard Java classes such as collections. If we look at our list from question one, then we will see that we already have an example of omitting the generic type:
+
 ```
 List list = new ArrayList();
 ```
+
 Despite being able to compile, it's still likely that there will be a warning from the compiler. This is because we are losing the extra compile-time check that we get from using generics.
 
 The point to remember is that while backward compatibility and type erasure make it possible to omit generic types, it is bad practice.
@@ -346,20 +351,24 @@ The point to remember is that while backward compatibility and type erasure make
 **Question:** How Does a Generic Method Differ from a Generic Type?
 
 **Answer:** A generic method is where a type parameter is introduced to a method, living within the scope of that method. Let's try this with an example:
+
 ```
 public static <T> T returnType(T argument) { 
     return argument; 
 }
 ```
+
 We've used a static method but could have also used a non-static one if we wished. By leveraging type inference (covered in the next question), we can invoke this like any ordinary method, without having to specify any type arguments when we do so.
 
 **Question:** What Is Type Inference?
 
 **Answer:** Type inference is when the compiler can look at the type of a method argument to infer a generic type. For example, if we passed in T to a method which returns T, then the compiler can figure out the return type. Let's try this out by invoking our generic method from the previous question:
+
 ```
 Integer inferredInteger = returnType(1);
 String inferredString = returnType("String");
 ```
+
 As we can see, there's no need for a cast, and no need to pass in any generic type argument. The argument type only infers the return type.
 
 **Question:** What Is a Bounded Type Parameter?
@@ -369,20 +378,27 @@ As we can see, there's no need for a cast, and no need to pass in any generic ty
 When we use bounded parameters, we are restricting the types that can be used as generic type arguments.
 
 As an example, let's say we want to force our generic type always to be a subclass of animal:
+
 ```
 public abstract class Cage<T extends Animal> {
     abstract void addAnimal(T animal)
 }
 ```
+
 By using extends, we are forcing T to be a subclass of animal. We could then have a cage of cats:
+
 ```
 Cage<Cat> catCage;
 ```
+
 But we could not have a cage of objects, as an object is not a subclass of an animal:
+
 ```
 Cage<Object> objectCage; // Compilation error
 ```
+
 One advantage of this is that all the methods of animal are available to the compiler. We know our type extends it, so we could write a generic algorithm which operates on any animal. This means we don't have to reproduce our method for different animal subclasses:
+
 ```
 public void firstAnimalJump() {
     T animal = animals.get(0);
@@ -393,17 +409,21 @@ public void firstAnimalJump() {
 **Question:** Is It Possible to Declared a Multiple Bounded Type Parameter?
 
 **Answer:** Declaring multiple bounds for our generic types is possible. In our previous example, we specified a single bound, but we could also specify more if we wish:
+
 ```
 public abstract class Cage<T extends Animal & Comparable>
 ```
+
 In our example, the animal is a class and comparable is an interface. Now, our type must respect both of these upper bounds. If our type were a subclass of animal but did not implement comparable, then the code would not compile. It's also worth remembering that if one of the upper bounds is a class, it must be the first argument.
 
 **Question:** What Is a Wildcard Type?
 
 **Answer:** A wildcard type represents an unknown type. It's detonated with a question mark as follows:
+
 ```
 public static void consumeListOfWildcardType(List<?> list)
 ```
+
 Here, we are specifying a list which could be of any type. We could pass a list of anything into this method.
 
 **Question:** What Is an Upper Bounded Wildcard?
@@ -411,6 +431,7 @@ Here, we are specifying a list which could be of any type. We could pass a list 
 **Answer:** An upper bounded wildcard is when a wildcard type inherits from a concrete type. This is particularly useful when working with collections and inheritance.
 
 Let's try demonstrating this with a farm class which will store animals, first without the wildcard type:
+
 ```
 public class Farm {
   private List<Animal> animals;
@@ -420,11 +441,14 @@ public class Farm {
   }
 }
 ```
+
 If we had multiple subclasses of animal, such as cat and dog, we might make the incorrect assumption that we can add them all to our farm:
+
 ```
 farm.addAnimals(cats); // Compilation error
 farm.addAnimals(dogs); // Compilation error
 ```
+
 This is because the compiler expects a collection of the concrete type animal, not one it subclasses.
 
 Now, let's introduce an upper bounded wildcard to our add animals method:
@@ -435,12 +459,15 @@ Now if we try again, our code will compile. This is because we are now telling t
 **Question:** What Is the Purpose of the Throw and Throws Keywords?
 
 **Answer:** The throws keyword is used to specify that a method may raise an exception during its execution. It enforces explicit exception handling when calling a method:
+
 ```
 public void simpleMethod() throws Exception {
     // ...
 }
 ```
+
 The throw keyword allows us to throw an exception object to interrupt the normal flow of the program. This is most commonly used when a program fails to satisfy a given condition:
+
 ```
 if (task.isTooComplicated()) {
     throw new TooComplicatedException("The task is too complicated");
@@ -472,7 +499,6 @@ All errors thrown by the JVM are instances of Error or one of its subclasses, th
 
 Although an error can be handled with a try statement, this is not a recommended practice since there is no guarantee that the program will be able to do anything reliably after the error was thrown.
 
-
 **Question:** What Is a Stacktrace and How Does It Relate to an Exception?
 
 **Answer:** A stack trace provides the names of the classes and methods that were called, from the start of the application to the point an exception occurred.
@@ -486,7 +512,6 @@ It's a very useful debugging tool since it enables us to determine exactly where
 Deciding whether a custom exception should be checked or unchecked depends entirely on the business case. However, as a rule of thumb; if the code using your exception can be expected to recover from it, then create a checked exception otherwise make it unchecked.
 
 Also, you should inherit from the most specific Exception subclass that closely relates to the one you want to throw. If there is no such class, then choose Exception as the parent.
-
 
 **Question:** What Are Annotations? What Are Their Typical Use Cases?
 
@@ -503,6 +528,7 @@ Their typical uses cases are:
 **Question:** How Can You Create an Annotation?
 
 **Answer:** Annotations are a form of an interface where the keyword interface is preceded by @, and whose body contains annotation type element declarations that look very similar to methods:
+
 ```
 public @interface SimpleAnnotation {
     String value();
@@ -510,7 +536,9 @@ public @interface SimpleAnnotation {
     int[] types();
 }
 ```
+
 After the annotation is defined, yon can start using it in through your code:
+
 ```
 @SimpleAnnotation(value = "an element", types = 1)
 public class Element {
@@ -518,9 +546,11 @@ public class Element {
     public Element nextElement;
 }
 ```
+
 Note that, when providing multiple values for array elements, you must enclose them in brackets.
 
 Optionally, default values can be provided as long as they are constant expressions to the compiler:
+
 ```
 public @interface SimpleAnnotation {
     String value() default "This is an element";
@@ -528,14 +558,18 @@ public @interface SimpleAnnotation {
     int[] types() default { 1, 2, 3 };
 }
 ```
+
 Now, you can use the annotation without those elements:
+
 ```
 @SimpleAnnotation
 public class Element {
     // ...
 }
 ```
+
 Or only some of them:
+
 ```
 @SimpleAnnotation(value = "an attribute")
 public Element nextElement;
@@ -546,17 +580,22 @@ public Element nextElement;
 **Answer:** Yes, the @Target annotation can be used for this purpose. If we try to use an annotation in a context where it is not applicable, the compiler will issue an error.
 
 Here's an example to limit the usage of the @SimpleAnnotation annotation to field declarations only:
+
 ```
 @Target(ElementType.FIELD)
 public @interface SimpleAnnotation {
     // ...
 }
 ```
+
 We can pass multiple constants if we want to make it applicable in more contexts:
+
 ```
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PACKAGE })
 ```
+
 We can even make an annotation so it cannot be used to annotate anything. This may come in handy when the declared types are intended solely for use as a member type in complex annotations:
+
 ```
 @Target({})
 public @interface NoTargetAnnotation {
@@ -564,11 +603,12 @@ public @interface NoTargetAnnotation {
 }
 ```
 
-**Question:** Q7. What Are Meta-Annotations? 
+**Question:** Q7. What Are Meta-Annotations?
 
 **Answer:** Are annotations that apply to other annotations.
 
 All annotations that aren't marked with @Target, or are marked with it but include ANNOTATION_TYPE constant are also meta-annotations:
+
 ```
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface SimpleAnnotation {
@@ -586,18 +626,22 @@ RetentionPolicy.SOURCE – makes the annotation to be discarded by the compiler 
 RetentionPolicy.CLASS – indicates that the annotation is added to the class file but not accessible through reflection
 RetentionPolicy.RUNTIME –Annotations are recorded in the class file by the compiler and retained by the JVM at runtime so that they can be read reflectively
 Here's an example code to create an annotation that can be read at runtime:
+
 ```
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Description {
     String value();
 }
 ```
+
 Now, annotations can be retrieved through reflection:
+
 ```
 Description description
   = AnnotatedClass.class.getAnnotation(Description.class);
 System.out.println(description.value());
 ```
+
 An annotation processor can work with RetentionPolicy.SOURCE, this is described in the article Java Annotation Processing and Creating a Builder.
 
 RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
@@ -606,6 +650,13 @@ RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
 
 **Answer:**
 
+**Question:**
+
+**Answer:**
+
+**Question:**
+
+**Answer:**
 
 **Question:**
 
@@ -615,7 +666,6 @@ RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
 
 **Answer:**
 
-
 **Question:**
 
 **Answer:**
@@ -623,16 +673,6 @@ RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
 **Question:**
 
 **Answer:**
-
-
-**Question:**
-
-**Answer:**
-
-**Question:**
-
-**Answer:**
-
 
 **Question:**
 
@@ -644,6 +684,7 @@ RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
 
 Collections <span id="Collections"></span>
 ------------------------------------------
+
 [Back](#top)
 
 **Queue vs PriorityQueue**
@@ -884,12 +925,14 @@ Nashorn provides better compliance with the ECMA normalized JavaScript specifica
 The stream represents a sequence of objects from a source such as a collection, which supports aggregate operations. They were designed to make collection processing simple and concise. Contrary to the collections, the logic of iteration is implemented inside the stream, so we can use methods like map and flatMap for performing a declarative processing.
 
 Additionally, the Stream API is fluent and allows pipelining:
+
 ```
 int sum = Arrays.stream(new int[]{1, 2, 3})
   .filter(i -> i >= 2)
   .map(i -> i * 3)
   .sum();
 ```
+
 Another important distinction from collections is that streams are inherently lazily loaded and processed.
 
 **Question:** What Is the Difference Between Intermediate and Terminal Operations?
@@ -903,6 +946,7 @@ These operations are always lazy, i.e. they do not process the stream at the cal
 In contrast, terminal operations terminate the pipeline and initiate stream processing. The stream is passed through all intermediate operations during terminal operation call. Terminal operations include forEach, reduce, Collect and sum.
 
 To drive this point home, let's look at an example with side effects:
+
 ```
 public static void main(String[] args) {
     System.out.println("Stream without terminal operation");
@@ -919,7 +963,9 @@ public static void main(String[] args) {
     }).sum();
 }
 ```
+
 The output will be as follows:
+
 ```
 Stream without terminal operation
 Stream with terminal operation
@@ -927,6 +973,7 @@ doubling 1
 doubling 2
 doubling 3
 ```
+
 As we can see, the intermediate operations are only triggered when a terminal operation exists.
 
 **Question:** What Is the Difference Between Map and flatMap Stream Operation?
@@ -942,6 +989,7 @@ Both map and flatMap are intermediate stream operations that receive a function 
 The difference is that for the map, this function returns a value, but for flatMap, this function returns a stream. The flatMap operation “flattens” the streams into one.
 
 Here's an example where we take a map of users' names and lists of phones and “flatten” it down to a list of phones of all the users using flatMap:
+
 ```
 Map<String, List<String>> people = new HashMap<>();
 people.put("John", Arrays.asList("555-1123", "555-3389"));
@@ -976,7 +1024,7 @@ In order to address these problems and provide better support in JDK, a new date
 **Answer:** Garbage collection is the process of looking at heap memory, identifying which objects are in use and which are not, and deleting the unused objects.
 
 **Question:** Are There Any Disadvantages of Garbage Collection?
- 
+
 **Answer:** Yes. Whenever the garbage collector runs, it has an effect on the application's performance. This is because all other threads in the application have to be stopped to allow the garbage collector thread to effectively do its work.
 
 However, this problem can be greatly reduced or even eliminated through skillful optimization and garbage collector tuning and using different GC algorithms.
@@ -1030,7 +1078,7 @@ After every minor garbage collection cycle, the age of each object is checked. T
 This pretty much exhausts the process of garbage collection in the young generation. Eventually, a major garbage collection will be performed on the old generation which cleans up and compacts that space. For each major GC, there are several minor GCs.
 
 **Question:** When Does an Object Become Eligible for Garbage Collection? Describe How the Gc Collects an Eligible Object?
- 
+
 **Answer:** An object becomes eligible for Garbage collection or GC if it is not reachable from any live threads or by any static references.
 
 The most straightforward case of an object becoming eligible for garbage collection is if all its references are null. Cyclic dependencies without any live external reference are also eligible for GC. So if object A references object B and object B references Object A and they don't have any other live reference then both Objects A and B will be eligible for Garbage collection.
@@ -1064,23 +1112,29 @@ The object, however, would be marked as finalized, so when it would become eligi
 Java provides us with reference objects to control the relationship between the objects we create and the garbage collector.
 
 By default, every object we create in a Java program is strongly referenced by a variable:
+
 ```
 StringBuilder sb = new StringBuilder();
 ```
+
 In the above snippet, the new keyword creates a new StringBuilder object and stores it on the heap. The variable sb then stores a strong reference to this object. What this means for the garbage collector is that the particular StringBuilder object is not eligible for collection at all due to a strong reference held to it by sb. The story only changes when we nullify sb like this:
+
 ```
 sb = null;
 ```
+
 After calling the above line, the object will then be eligible for collection.
 
 We can change this relationship between the object and the garbage collector by explicitly wrapping it inside another reference object which is located inside java.lang.ref package.
 
 A soft reference can be created to the above object like this:
+
 ```
 StringBuilder sb = new StringBuilder();
 SoftReference<StringBuilder> sbRef = new SoftReference<>(sb);
 sb = null;
 ```
+
 In the above snippet, we have created two references to the StringBuilder object. The first line creates a strong reference sb and the second line creates a soft reference sbRef. The third line should make the object eligible for collection but the garbage collector will postpone collecting it because of sbRef.
 
 The story will only change when memory becomes tight and the JVM is on the brink of throwing an OutOfMemory error. In other words, objects with only soft references are collected as a last resort to recover memory.
@@ -1112,70 +1166,83 @@ StringBuffer is different from StringBuilder in that it is thread-safe. If you n
 **Answer:** Type is the name of a class or interface. As implied by the name, a generic type parameter is when a type can be used as a parameter in a class, method or interface declaration.
 
 Let's start with a simple example, one without generics, to demonstrate this:
+
 ```
 public interface Consumer {
     public void consume(String parameter)
 }
 ```
+
 In this case, the method parameter type of the consume() method is String. It is not parameterized and not configurable.
 
 Now let's replace our String type with a generic type that we will call T. It is named like this by convention:
+
 ```
 public interface Consumer<T> {
     public void consume(T parameter)
 }
 ```
+
 When we implement our consumer, we can provide the type that we want it to consume as an argument. This is a generic type parameter:
+
 ```
 public class IntegerConsumer implements Consumer<Integer> {
     public void consume(Integer parameter)
 }
 ```
+
 In this case, now we can consume integers. We can swap out this type for whatever we require.
 
 **Question:** Q2. What Are Some Advantages of Using Generic Types?
 
 **Answer:** One advantage of using generics is avoiding casts and provide type safety. This is particularly useful when working with collections. Let's demonstrate this:
+
 ```
 List list = new ArrayList();
 list.add("foo");
 Object o = list.get(0);
 String foo = (String) o;
 ```
+
 In our example, the element type in our list is unknown to the compiler. This means that the only thing that can be guaranteed is that it is an object. So when we retrieve our element, an Object is what we get back. As the authors of the code, we know it's a String, but we have to cast our object to one to fix the problem explicitly. This produces a lot of noise and boilerplate.
 
 Next, if we start to think about the room for manual error, the casting problem gets worse. What if we accidentally had an Integer in our list?
+
 ```
 list.add(1)
 Object o = list.get(0);
 String foo = (String) o;
 ```
+
 In this case, we would get a ClassCastException at runtime, as an Integer cannot be cast to String.
 
 Now, let's try repeating ourselves, this time using generics:
+
 ```
 List<String> list = new ArrayList<>();
 list.add("foo");
 String o = list.get(0);    // No cast
 Integer foo = list.get(0); // Compilation error
 ```
+
 As we can see, by using generics we have a compile type check which prevents ClassCastExceptions and removes the need for casting.
 
 The other advantage is to avoid code duplication. Without generics, we have to copy and paste the same code but for different types. With generics, we do not have to do this. We can even implement algorithms that apply to generic types.
 
-**Question:** 
+**Question:**
 
 **Answer:**
 
-**Question:** 
+**Question:**
 
 **Answer:**
 
-**Question:** 
+**Question:**
 
 **Answer:**
 Threading/Concurrency <span id="Concurrency"></span>
 ----------------------------------------------------
+
 [Back](#top)
 
 **Runnable vs Callable**

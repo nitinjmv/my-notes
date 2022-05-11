@@ -1,9 +1,3 @@
-[Basics](#Basics)
-
-[Design Patterns](#DesignPatterns)
-
-[MicroServices Architecture](#MicroServicesArchitecture)
-
 ## SOLID Principals 
 1. Single Responsibility
 2. Open/Closed
