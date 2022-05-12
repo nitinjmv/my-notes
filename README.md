@@ -19,5 +19,8 @@ Testing
 Deployment
 ----------
 
+- [K8S](deployment/k8s.md)
+- [Docker](deployment/docker.md)
+
 Monitoring
 ----------
