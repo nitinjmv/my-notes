@@ -11,8 +11,8 @@ Let's begin with the single responsibility principle. As we might expect, this p
 
 How does this principle help us to build better software? Let's see a few of its benefits:
 
-Testing – A class with one responsibility will have far fewer test cases.
-Lower coupling – Less functionality in a single class will have fewer dependencies.
+- Testing – A class with one responsibility will have far fewer test cases.
+- Lower coupling – Less functionality in a single class will have fewer dependencies.
 Organization – Smaller, well-organized classes are easier to search than monolithic ones.
 For example, let's look at a class to represent a simple book:
 ```
