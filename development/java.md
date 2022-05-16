@@ -13,27 +13,26 @@ Basics <span id="Basics"></span>
 
 **Oops Concepts**
 
-- Encapsulation - data hiding, e.g. variables can be hidden.
-- Abstraction - hiding implementation details e.g. Interface.
+- Encapsulation - binding code & data together e.g. ava bean is the fully encapsulated class because all the data members are private here.
+- Abstraction - hiding implementation details e.g. abstract class & Interface.
 - Polymorphism - Many name e.g. method overloading & overriding.
 - Inheritance - reusability e.g. class can be extended to another class.
 
-**Question:** Describe the Meaning of the Final Keyword When Applied to a Class, Method, Field or a Local Variable.
+**Question:** Final Keyword When Applied to a Class, Method, Field or a Local Variable.
 
-**Answer:** The final keyword has multiple different meanings when applied to different language constructs:
+**Answer:** The final keyword has multiple different meanings when applied to different places:
 
-A final class is a class that cannot be subclassed
-A final method is a method that cannot be overridden in subclasses
-A final field is a field that has to be initialized in the constructor or initializer block and cannot be modified after that
-A final variable is a variable that may be assigned (and has to be assigned) only once and is never modified after that
+- A final class is a class that cannot be subclassed
+- A final method is a method that cannot be overridden in subclasses
+- A final variable is a variable that can be assigned only once and is never modified after that
 
 **Question:** What Is a Default Method?
 
-**Answer:** Prior to Java 8, interfaces could only have abstract methods, i.e. methods without a body. Starting with Java 8, interface methods can have a default implementation. If an implementing class does not override this method, then the default implementation is used. Such methods are suitably marked with a default keyword.
+**Answer:** Prior to Java 8, interfaces could only have abstract methods. Starting with Java 8, interface methods can have a default implementation. If an implementing class does not override this method, then the default implementation is used. Such methods are suitably marked with a default keyword.
 
-One of the prominent use cases of a default method is adding a method to an existing interface. If you don't mark such interface method as default, then all existing implementations of this interface will break. Adding a method with a default implementation ensures binary compatibility of legacy code with the new version of this interface.
+One of the prominent use cases of a default method is adding a method to an existing interface. If you don't mark such interface method as default, then all existing implementations of this interface will break. Adding a method with a default implementation ensures compatibility of legacy code with the new version of this interface.
 
-A good example of this is the Iterator interface which allows a class to be a target of the for-each loop. This interface first appeared in Java 5, but in Java 8 it received two additional methods, forEach, and spliterator. They are defined as default methods with implementations and thus do not break backward compatibility:
+A good example of this is the Iterator interface. In Java 8 it received two additional methods, forEach, and spliterator. They are defined as default methods with implementations and thus do not break backward compatibility:
 
 ```
 public interface Iterable<T> {
@@ -48,42 +47,13 @@ public interface Iterable<T> {
 
 **Question:** What Are Static Class Members?
 
-**Answer:** Static fields and methods of a class are not bound to a specific instance of a class. Instead, they are bound to the class object itself. The call of a static method or addressing a static field is resolved at compile time because, contrary to instance methods and fields, we don't need to walk the reference and determine an actual object we're referring to.
+**Answer:** Static fields and methods are not bound to a instance of a class. Instead, they are bound to the class itself.
+
+The call of a static method or addressing a static field is resolved at compile time because, contrary to instance methods and fields, we don't need to walk the reference and determine an actual object we're referring to.
 
 **Question:** May a Class Be Declared Abstract If It Does Not Have Any Abstract Members? What Could Be the Purpose of Such Class?
 
 **Answer:** Yes, a class can be declared abstract even if it does not contain any abstract members. As an abstract class, it cannot be instantiated, but it can serve as a root object of some hierarchy, providing methods that can be useful to its implementations.
-
-**Question:** What Is Constructor Chaining?
-
-**Answer:** Constructor chaining is a way of simplifying object construction by providing multiple constructors that call each other in sequence.
-
-The most specific constructor may take all possible arguments and may be used for the most detailed object configuration. A less specific constructor may call the more specific constructor by providing some of its arguments with default values. At the top of the chain, a no-argument constructor could instantiate an object with default values.
-
-Here's an example with a class that models a discount in percents that are available within a certain amount of days. The default values of 10% and 2 days are used if we don't specify them when using a no-arg constructor:
-
-```
-public class Discount {
-
-    private int percent;
-
-    private int days;
-
-    public Discount() {
-        this(10);
-    }
-
-    public Discount(int percent) {
-        this(percent, 2);
-    }
-
-    public Discount(int percent, int days) {
-        this.percent = percent;
-        this.days = days;
-    }
-
-}
-```
 
 **Question:** What Is Overriding and Overloading of Methods? How Are They Different?
 
@@ -107,7 +77,7 @@ public abstract class Writer {
 }
 ```
 
-**Question:** Q7. Can You Override a Static Method?
+**Question:** Can You Override a Static Method?
 
 **Answer:** No, you can't. By definition, you can only override a method if its implementation is determined at runtime by the type of the actual instance (a process known as the dynamic method lookup). The static method implementation is determined at compile time using the type of the reference, so overriding would not make much sense anyway. Although you can add to subclass a static method with the exact same signature as in superclass, this is not technically overriding.
 
@@ -118,8 +88,11 @@ public abstract class Writer {
 To make a class immutable, you should ensure the following:
 
 - All fields should be declared private and final; this infers that they should be initialized in the constructor and not changed ever since;
+
 - The class should have no setters or other methods that mutate the values of the fields;
+
 - All fields of the class that were passed via constructor should either be also immutable, or their values should be copied before field initialization (or else we could change the state of this class by holding on to these values and modifying them);
+
 - The methods of the class should not be overridable; either all methods should be final, or the constructor should be private and only invoked via static factory method.
 
 **Question:** How Do You Compare Two Enum Values: With equals() or With ==?
@@ -144,7 +117,7 @@ A static initializer block is a curly-braced block of code with the static modif
 
 - Remote is used in RMI to specify an interface which methods could be called remotely.
 
-**Question:** Q12. What Is a Singleton and How Can It Be Implemented in Java?
+**Question:** What Is a Singleton and How Can It Be Implemented in Java?
 
 **Answer:** Singleton is a pattern of object-oriented programming. A singleton class may only have one instance, usually globally visible and accessible.
 
@@ -181,7 +154,7 @@ public static <T> boolean addAll(
 }
 ```
 
-**Question:** Q14. Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?
+**Question:** Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?
 
 **Answer:** To access an overridden method of a superclass, you can use the super keyword. But you don't have a similar way of accessing the overridden method of a super-superclass.
 
@@ -199,16 +172,23 @@ public void clear() {
 **Answer:**
 
 - Lambda Expressions − a new language feature allowing us to treat actions as objects
+
 - Method References − enable us to define Lambda Expressions by referring to methods directly using their names
+
 - Optional − special wrapper class used for expressing optionality
+
 - Functional Interface – an interface with maximum one abstract method; implementation can be provided using a Lambda Expression
+
 - Default methods − give us the ability to add full implementations in interfaces besides abstract methods
+
 - Nashorn, JavaScript Engine − Java-based engine for executing and evaluating JavaScript code
+
 - Stream API − a special iterator class that allows us to process collections of objects in a functional manner
+
 - Date API − an improved, immutable JodaTime-inspired Date API
 Along with these new features, lots of feature enhancements are done under the hood at both the compiler and JVM level.
 
-**Question:** Q1. What Is a Method Reference?
+**Question:** What Is a Method Reference?
 
 **Answer:** A method reference is a Java 8 construct that can be used for referencing a method without invoking it. It's used for treating methods as Lambda Expressions. They only work as syntactic sugar to reduce the verbosity of some lambdas. This way the following code:
 
@@ -603,7 +583,7 @@ public @interface NoTargetAnnotation {
 }
 ```
 
-**Question:** Q7. What Are Meta-Annotations?
+**Question:** What Are Meta-Annotations?
 
 **Answer:** Are annotations that apply to other annotations.
 
