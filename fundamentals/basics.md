@@ -291,3 +291,29 @@ AP systems are about availability and partition tolerance. Consequently, they mi
 
 CP systems are consistent and partition tolerant. For example, MongoDB is a NoSQL database and a CP system. Strong consistency is reached by using the single master node for the write operation. MongoDB can be partitioned without losing consistency. However, when partitioning, it may become unavailable. The system won’t accept write requests until it makes sure that all operations will be saved safely.
 
+### Security
+
+**Injection** SQL Injection - when query is altered by user's input.
+user PrepareStatement to avoid the risk.
+
+**Broken Authentication** User's Session at risk. Don't keep the session alive for long time.
+
+**Sensitive Data Exposure** Encrypting the personal and sensetive data.
+
+**XML External Entities** commands can be passed as XML data and XML parser can run those commands on server.
+
+**Broken Access Control** Define proper role and access so that not everyone can access everything.
+
+**Security Misconfiguration** Don't use the default configuration.
+
+**Cross-site scripting (XSS)** execute the external script on any browser.
+Encode and escape and melacious character in the output data which is being sent to client.
+
+**Insecure Deserialization** instead of data some code/command is wrapped in data..and server deserialize and execute it. 
+
+**Known Vulnerabilities** hide the server details from users so that users don't know which product/version you are using.
+
+**Insufficient Logging & Monitoring** log the data properly & monitor it so that you know what is happening on server.
+
+Owasp dependency check.
+Secure database access
