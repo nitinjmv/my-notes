@@ -2,7 +2,7 @@ Fundamentals
 ------------
 
 - [Basics](fundamentals/basics.md)
-- [MicroServices Architecture](fundamentals/microservices-architecture.md)
+- [MicroServices](fundamentals/microservices.md)
 - [Design Patterns](fundamentals/design-patterns.md)
 
 Development
