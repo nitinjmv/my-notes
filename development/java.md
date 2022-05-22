@@ -14,19 +14,18 @@ Basics <span id="Basics"></span>
 **Oops Concepts**
 
 Main principals
-- Encapsulation - binding code & data together 
+- Encapsulation - binding code & data together. 
 
-e.g. Java bean is the fully encapsulated class because all the data members are private here can only be access via getter & setter.
+    e.g. Java bean is the fully encapsulated class because all the data members are private here and can only be access via getter & setter.
 
-- Abstraction - hides internal implementation details 
+- Abstraction - hides internal implementation details.
 e.g.   
     -   abstract class - partial abstration 
     -   Interface - complete abstraction
 
-
 - Polymorphism - Many name e.g. method overloading & overriding.
 
-- Inheritance - reusability e.g. class can be extended to another class. extends
+- Inheritance - reusability e.g. class can be extended to another class.
 
 Secondary principals
 - association 
