@@ -1,9 +1,9 @@
 ## SOLID Principals 
-1. Single Responsibility
-2. Open/Closed
-3. Liskov Substitution
-4. Interface Segregation
-5. Dependency Inversion
+1. Single Responsibility Principle - this means you should design your classes in such a way that each class should have a single purpose. 
+2. Open/Closed Principle - This principle states that software entities like classes, modules, functions should be open for extension but closed for modification. 
+3. Liscov Substitution Principle - this principle states that functions that use pointers or references to base classes must be able to use objects of derived classes. 
+4. Interface Segregation Principle - This means the number of members in the interface that is visible to the dependent class should be minimised. 
+5. Dependency Inversion Principle - High-level modules, which provide complex logic, should be easily reusable and unaffected by changes in low-level modules
 
 ### Single Responsibility
 
@@ -293,8 +293,11 @@ CP systems are consistent and partition tolerant. For example, MongoDB is a NoSQ
 
 ### Security
 
-**Injection** SQL Injection - when query is altered by user's input.
-user PrepareStatement to avoid the risk.
+**Injection** SQL Injection - when query is altered by user's input such as login is directly making query to check valid user. 
+Prevention:
+- PrepareStatement - first define all the SQL code then pass in each parameter to query later.
+- Stored procedures - requires developers to build sql statements that are parameterized.
+- Sanitize user's input & Escape the input.
 
 **Broken Authentication** User's Session at risk. Don't keep the session alive for long time.
 

@@ -1,1 +1,0 @@
-![plot](./resources/microservices-design-pattern.jpeg)
