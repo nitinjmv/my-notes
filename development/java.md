@@ -46,7 +46,7 @@ Secondary principals
   - Both classes are dependent on each other
   - If one class ceases to exist, the other can’t survive alone
 
-<mark>**Question:** Final Keyword?
+<mark>**Question:** Final Keyword?</mark>
 
 **Answer:** final keyword has different meanings at different places:
 
