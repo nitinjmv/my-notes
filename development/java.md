@@ -46,7 +46,7 @@ Secondary principals
   - Both classes are dependent on each other
   - If one class ceases to exist, the other can’t survive alone
 
-**Question:** Final Keyword?
+<mark>**Question:** Final Keyword?
 
 **Answer:** final keyword has different meanings at different places:
 
@@ -54,51 +54,44 @@ Secondary principals
 - A final method is a method that cannot be overridden in subclasses.
 - A final variable is a variable that can be assigned only once and is never modified after that.
 
-**Question:** What Is a Default Method?
+<mark>**Question:** What Is a Default Method?
 
 **Answer:** It's implementation can be provided in Interface.
 
-One of the use cases of a default method is adding a method to an existing interface which ensures backward compatibility.
+One of the use cases, it ensures backward compatibility when added to an existing interface.
 
-A good example of this is the Iterator interface. In Java 8 it received two additional methods, forEach, and spliterator.
+e.g. Iterator interface. In Java 8 it received two additional methods, forEach, and spliterator.
 
-**Question:** What Are Static Class Members?
+<mark>**Question:** What Are Static Class Members?
 
-**Answer:** Static fields and methods are not bound to a instance of a class. Instead, they are bound to the class itself.
+**Answer:** Static fields and methods are bound to class & not bound to instance.
 
-The call of a static method or addressing a static field is resolved at compile time because, contrary to instance methods and fields, we don't need to walk the reference and determine an actual object we're referring to.
+Static members (method & field) are resolved at compile time.
 
-**Question:** May a Class Be Declared Abstract If It Does Not Have Any Abstract Members? What Could Be the Purpose of Such Class?
+<mark>**Question:** May a Class Be Declared Abstract If It Does Not Have Any Abstract Members? What Could Be the Purpose of Such Class?
 
 **Answer:** Yes, a class can be declared abstract even if it does not contain any abstract members. As an abstract class, it cannot be instantiated, but it can serve as a root object of some hierarchy, providing methods that can be useful to its implementations.
 
-**Question:** What Is Overriding and Overloading of Methods? How Are They Different?
+<mark>**Question:** What Is Overriding and Overloading of Methods? How Are They Different?
 
-**Answer:** Overriding of a method is done in a subclass when you define a method with the same signature as in superclass. This allows the runtime to pick a method depending on the actual object type that you call the method on. Methods toString, equals, and hashCode are overridden quite often in subclasses.
+**Answer:**
 
-Overloading of a method happens in the same class. Overloading occurs when you create a method with the same name but with different types or number of arguments. This allows you to execute a certain code depending on the types of arguments you provide, while the name of the method remains the same.
+- Overriding of a method is done in a subclass when a  method is defined with the same signature as in superclass.
+- Runtime polymorphism.
 
-Here's an example of overloading in the java.io.Writer abstract class. The following methods are both named write, but one of them receives an int while another receives a char array.
+- Overloading of a method happens in the same class.
 
-```
-public abstract class Writer {
+- Overloading occurs when you create a method with the same name but with different types or number of arguments.
 
-    public void write(int c) throws IOException {
-        // ...
-    }
+<mark>**Question:** Can You Override a Static Method?
 
-    public void write(char cbuf[]) throws IOException {
-        // ...
-    }
+**Answer:** No.
 
-}
-```
+- you can only override a method if its implementation is determined at runtime (a process known as the dynamic method lookup).
+- The static method implementation is determined at compile time.
+- Although you can add to subclass a static method with the exact same signature as in superclass, this is not technically overriding.
 
-**Question:** Can You Override a Static Method?
-
-**Answer:** No, you can't. By definition, you can only override a method if its implementation is determined at runtime by the type of the actual instance (a process known as the dynamic method lookup). The static method implementation is determined at compile time using the type of the reference, so overriding would not make much sense anyway. Although you can add to subclass a static method with the exact same signature as in superclass, this is not technically overriding.
-
-**Question:** What Is an Immutable Class, and How Can You Create One?
+<mark>**Question:** What Is an Immutable Class, and How Can You Create One?
 
 **Answer:** An instance of an immutable class cannot be changed after it's created. By changing we mean mutating the state by modifying the values of the fields of the instance. Immutable classes have many advantages: they are thread-safe, and it is much easier to reason about them when you have no mutable state to consider.
 
@@ -112,33 +105,38 @@ To make a class immutable, you should ensure the following:
 
 - The methods of the class should not be overridable; either all methods should be final, or the constructor should be private and only invoked via static factory method.
 
-**Question:** How Do You Compare Two Enum Values: With equals() or With ==?
+<mark>**Question:** What Is an Initializer Block? What Is a Static Initializer Block?
 
-**Answer:** Actually, you can use both. The enum values are objects, so they can be compared with equals(), but they are also implemented as static constants under the hood, so you might as well compare them with ==. This is mostly a matter of code style, but if you want to save character space (and possibly skip an unneeded method call), you should compare enums with ==.
+**Answer:**
 
-**Question:** What Is an Initializer Block? What Is a Static Initializer Block?
+- An initializer block is a curly-braced block of code in the class scope with static modifier in front of it.
+- It is executed during the instance creation/class loading and can be used for initializing static fields etc.
 
-**Answer:** An initializer block is a curly-braced block of code in the class scope which is executed during the instance creation. You can use it to initialize fields with something more complex than in-place initialization one-liners.
+<mark>**Question:** What Is a Marker Interface? What Are the Notable Examples of Marker Interfaces in Java?
 
-Actually, the compiler just copies this block inside every constructor, so it is a nice way to extract common code from all constructors.
+**Answer:**
 
-A static initializer block is a curly-braced block of code with the static modifier in front of it. It is executed once during the class loading and can be used for initializing static fields or for some side effects.
+- A marker interface is an interface without any methods.
 
-**Question:** What Is a Marker Interface? What Are the Notable Examples of Marker Interfaces in Java?
+e.g.
 
-**Answer:** A marker interface is an interface without any methods. It is usually implemented by a class or extended by another interface to signify a certain property. The most widely known marker interfaces in standard Java library are the following:
+- Serializable: to explicitly express that the class is serialized.
 
-- Serializable is used to explicitly express that this class can be serialized;
+- Cloneable: allows cloning objects using the clone method (without Cloneable interface in place, this method throws a CloneNotSupportedException)
 
-- Cloneable allows cloning objects using the clone method (without Cloneable interface in place, this method throws a CloneNotSupportedException)
+- Remote: is used in RMI to specify an interface which methods could be called remotely.
 
-- Remote is used in RMI to specify an interface which methods could be called remotely.
+<mark>**Question:** What Is a Singleton and How Can It Be Implemented in Java?
 
-**Question:** What Is a Singleton and How Can It Be Implemented in Java?
+**Answer:**
 
-**Answer:** Singleton is a pattern of object-oriented programming. A singleton class may only have one instance, usually globally visible and accessible.
+- Singleton comes under creational design patterns of object-oriented programming.
+- A singleton class may only have one instance, usually globally visible and accessible.
 
-There are multiple ways of creating a singleton in Java. The following is the most simple example with a static field that is initialized in-place. The initialization is thread-safe because static fields are guaranteed to be initialized in a thread-safe manner. The constructor is private, so there is no way for outer code to create more than one instance of the class.
+e.g. there are multiple ways of creating singleton, one of is as following:
+
+- Static field that is initialized in-place. The initialization is thread-safe because static fields are guaranteed to be initialized in a thread-safe manner.
+- The constructor is private, so there is no way for outer code to create more than one instance of the class.
 
 ```
 public class SingletonExample {
@@ -153,38 +151,31 @@ public class SingletonExample {
 }
 ```
 
-But this approach could have a serious drawback — the instance would be instantiated when this class is first accessed. If initialization of this class is a heavy operation, and we would probably like to defer it until the instance is actually needed (possibly never), but at the same time keep it thread-safe. In this case, we should use a technique known as double-checked locking.
+<mark>**Question:** What Is a Var-Arg? What Are the Restrictions on a Var-Arg? How Can You Use It Inside the Method Body?</mark>
 
-**Question:** What Is a Var-Arg? What Are the Restrictions on a Var-Arg? How Can You Use It Inside the Method Body?
+**Answer:**
 
-**Answer:** Var-arg is a variable-length argument for a method. A method may have only one var-arg, and it has to come last in the list of arguments. It is specified as a type name followed by an ellipsis and an argument name. Inside the method body, a var-arg is used as an array of specified type.
+- Var-arg is a variable-length argument for a method.
+- A method may have only one var-arg, and it has to come last in the list of arguments.
+- Inside the method body, a var-arg is used as an array of specified type.
 
-Here's an example from the standard library — the Collections.addAll method that receives a collection, a variable number of elements, and adds all elements to the collection:
-
-```
-public static <T> boolean addAll(
-  Collection<? super T> c, T... elements) {
-    boolean result = false;
-    for (T element : elements)
-        result |= c.add(element);
-    return result;
-}
-```
-
-**Question:** Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?
-
-**Answer:** To access an overridden method of a superclass, you can use the super keyword. But you don't have a similar way of accessing the overridden method of a super-superclass.
-
-As an example from the standard library, LinkedHashMap class extends HashMap and mostly re-uses its functionality, adding a linked list over its values to preserve iteration order. LinkedHashMap re-uses the clear method of its superclass and then clears head and tail references of its linked list:
+e.g.
 
 ```
-public void clear() {
-    super.clear();
-    head = tail = null;
-}
+ public static void main(String[] args) {
+        new VarArg().printMeVarArg("HR", "aaa","bbb", "ccc");
+    }
+
+    public void printMeVarArg(String dept, String... names){
+        Arrays.stream(names).forEach(System.out::println);
+    }
 ```
 
-**Question:** What New Features Were Added in Java 8?
+<mark>**Question:** Can You Access an Overridden Method of a Superclass? Can You Access an Overridden Method of a Super-Superclass in a Similar Way?</mark>
+
+**Answer:** yes, with super keyword. But you don't have a similar way of accessing the overridden method of a super-superclass.
+
+<mark>**Question:** What New Features Were Added in Java 8?</mark>
 
 **Answer:**
 
@@ -205,81 +196,68 @@ public void clear() {
 - Date API − an improved, immutable JodaTime-inspired Date API
 Along with these new features, lots of feature enhancements are done under the hood at both the compiler and JVM level.
 
-**Question:** What Is a Method Reference?
+<mark>**Question:** What Is a Method Reference?</mark>
 
-**Answer:** A method reference is a Java 8 construct that can be used for referencing a method without invoking it. It's used for treating methods as Lambda Expressions. They only work as syntactic sugar to reduce the verbosity of some lambdas. This way the following code:
+**Answer:**
 
-```
-(o) -> o.toString();
-```
+- Used for referencing a method without invoking it.
+- It's used for treating methods as Lambda Expressions.
+- They are only used to reduce the verbosity of some lambdas.
 
-Can become:
+e.g.
 
-```
-Object::toString();
-```
+- class/object name::method
 
-A method reference can be identified by a double colon separating a class or object name, and the name of the method. It has different variations, such as constructor reference:
+    ```
+    (o) -> o.toString();
+    ```
 
-```
-String::new;
-```
+    Can become:
 
-Static method reference:
+    ```
+    Object::toString();
+    ```
 
-```
-String::valueOf;
-```
+Different variations,
 
-Bound instance method reference:
+- Constructor reference:
 
-```
-str::toString;
-```
+    ```
+    String::new;
+    ```
 
-Unbound instance method reference:
+- Static method reference:
 
-```
-String::toString;
-```
+    ```
+    String::valueOf;
+    ```
 
-**Question:** What Is the Meaning of String::Valueof Expression?
+- Bound instance method reference:
 
-**Answer:** It's a static method reference to the valueOf method of the String class.
+    ```
+    str::toString;
+    ```
 
-**Question:** What Is Optional? How Can It Be Used?
+- Unbound instance method reference:
+
+    ```
+    String::toString;
+    ```
+
+<mark>**Question:** What Is Optional? How Can It Be Used?</mark>
   
-**Answer:** Optional is a new class in Java 8 that encapsulates an optional value, i.e. a value that is either there or not. It's a wrapper around an object, and we can think of it as a container of zero or one element.
+**Answer:** 
+- It's a wrapper around an object which encapsulates an optional value, i.e. a value that is either there or not.
+- Avoids NullPointerException in many cases.
+- Reduces boilerplate code for null check.
 
-Optional has a special Optional.empty() value instead of wrapped null. Thus it can be used instead of a nullable value to get rid of NullPointerException in many cases.
+<mark>**Question:** Describe Some of the Functional Interfaces in the Standard Library?</mark>
 
-The main purpose of Optional, as designed by its creators, is to be a return type of methods that previously would return null. Such methods would require us to write boilerplate code to check the return value, and we could sometimes forget to do a defensive check. In Java 8, an Optional return type explicitly requires us to handle null or non-null wrapped values differently.
-
-For instance, the Stream.min() method calculates the minimum value in a stream of values. But what if the stream is empty? If it wasn't for Optional, the method would return null or throw an exception.
-
-However, it returns an Optional value, which may be Optional.empty() (the second case). This allows us to easily handle such cases:
-
-```
-int min1 = Arrays.stream(new int[]{1, 2, 3, 4, 5})
-  .min()
-  .orElse(0);
-assertEquals(1, min1);
-
-int min2 = Arrays.stream(new int[]{})
-  .min()
-  .orElse(0);
-assertEquals(0, min2);
-```
-
-It's worth noting that Optional is not a general purpose class like Option in Scala. It's not recommended that we use it as a field value in entity classes, which is clearly indicated by it not implementing the Serializable interface.
-
-**Question:** Describe Some of the Functional Interfaces in the Standard Library
-
-**Answer:** There are a lot of functional interfaces in the java.util.function package. The more common ones include, but are not limited to:
+**Answer:** Some common functional interfaces in the java.util.function package are following:
 
 - Function – it takes one argument and returns a result
 
-- Consumer – it takes one argument and returns no result (represents a side effect)
+- Consumer – it takes one argument and returns no result
 
 - Supplier – it takes no arguments and returns a result
 
@@ -291,32 +269,30 @@ It's worth noting that Optional is not a general purpose class like Option in Sc
 
 - UnaryOperator – it is similar to a Function, taking a single argument and returning a result of the same type
 
-**Question:** What Is a Functional Interface? What Are the Rules of Defining a Functional Interface?
+<mark>**Question:** What Is a Functional Interface? What Are the Rules of Defining a Functional Interface??</mark>
 
-**Answer:** A functional interface is an interface with one single abstract method (default methods do not count), no more, no less.
+**Answer:** An interface with only one single abstract method (SAM).
 
-Where an instance of such an interface is required, a Lambda Expression can be used instead. More formally put: Functional interfaces provide target types for lambda expressions and method references.
-
-The arguments and return type of such an expression directly match those of the single abstract method.
-
-For instance, the Runnable interface is a functional interface, so instead of:
+e.g.
 
 ```
-Thread thread = new Thread(new Runnable() {
-    public void run() {
-        System.out.println("Hello World!");
-    }
-});
+public static void main(String[] args) {
+    HelloSAM s = () -> System.out.println("hello");
+    s.hello();
+}
+
+@FunctionalInterface
+interface HelloSAM{
+    void hello();
+}
+
 ```
 
-We could simply do:
+<mark>**Question:** What Is Type Erasure?</mark>
 
-Thread thread = new Thread(() -> System.out.println("Hello World!"));
-Functional interfaces are usually annotated with the @FunctionalInterface annotation, which is informative and doesn't affect the semantics.
-
-**Question:** What Is Type Erasure?
-
-**Answer:** It's important to realize that generic type information is only available to the compiler, not the JVM. In other words, type erasure means that generic type information is not available to the JVM at runtime, only compile time.
+**Answer:** 
+- Generic type information is only available to the compiler, not the JVM. 
+- In other words, type erasure means that generic type information is not available to the JVM at runtime, only compile time.
 
 The reasoning behind major implementation choice is simple – preserving backward compatibility with older versions of Java. When a generic code is compiled into bytecode, it will be as if the generic type never existed. This means that the compilation will:
 
@@ -333,7 +309,7 @@ public foo(Consumer<T> consumer) {
 
 The above example is a pseudo code equivalent of what things might look like without type erasure, but unfortunately, it is impossible. Once again, the generic type information is not available at runtime.
 
-**Question:** If a Generic Type Is Omitted When Instantiating an Object, Will the Code Still Compile?
+<mark>**Question:** If a Generic Type Is Omitted When Instantiating an Object, Will the Code Still Compile?
 
 **Answer:** As generics did not exist before Java 5, it is possible not to use them at all. For example, generics were retrofitted to most of the standard Java classes such as collections. If we look at our list from question one, then we will see that we already have an example of omitting the generic type:
 
@@ -345,7 +321,7 @@ Despite being able to compile, it's still likely that there will be a warning fr
 
 The point to remember is that while backward compatibility and type erasure make it possible to omit generic types, it is bad practice.
 
-**Question:** How Does a Generic Method Differ from a Generic Type?
+<mark>**Question:** How Does a Generic Method Differ from a Generic Type?
 
 **Answer:** A generic method is where a type parameter is introduced to a method, living within the scope of that method. Let's try this with an example:
 
@@ -357,7 +333,7 @@ public static <T> T returnType(T argument) {
 
 We've used a static method but could have also used a non-static one if we wished. By leveraging type inference (covered in the next question), we can invoke this like any ordinary method, without having to specify any type arguments when we do so.
 
-**Question:** What Is Type Inference?
+<mark>**Question:** What Is Type Inference?
 
 **Answer:** Type inference is when the compiler can look at the type of a method argument to infer a generic type. For example, if we passed in T to a method which returns T, then the compiler can figure out the return type. Let's try this out by invoking our generic method from the previous question:
 
@@ -368,7 +344,7 @@ String inferredString = returnType("String");
 
 As we can see, there's no need for a cast, and no need to pass in any generic type argument. The argument type only infers the return type.
 
-**Question:** What Is a Bounded Type Parameter?
+<mark>**Question:** What Is a Bounded Type Parameter?
 
 **Answer:** So far all our questions have covered generic types arguments which are unbounded. This means that our generic type arguments could be any type that we want.
 
@@ -403,7 +379,7 @@ public void firstAnimalJump() {
 }
 ```
 
-**Question:** Is It Possible to Declared a Multiple Bounded Type Parameter?
+<mark>**Question:** Is It Possible to Declared a Multiple Bounded Type Parameter?
 
 **Answer:** Declaring multiple bounds for our generic types is possible. In our previous example, we specified a single bound, but we could also specify more if we wish:
 
@@ -413,7 +389,7 @@ public abstract class Cage<T extends Animal & Comparable>
 
 In our example, the animal is a class and comparable is an interface. Now, our type must respect both of these upper bounds. If our type were a subclass of animal but did not implement comparable, then the code would not compile. It's also worth remembering that if one of the upper bounds is a class, it must be the first argument.
 
-**Question:** What Is a Wildcard Type?
+<mark>**Question:** What Is a Wildcard Type?
 
 **Answer:** A wildcard type represents an unknown type. It's detonated with a question mark as follows:
 
@@ -423,7 +399,7 @@ public static void consumeListOfWildcardType(List<?> list)
 
 Here, we are specifying a list which could be of any type. We could pass a list of anything into this method.
 
-**Question:** What Is an Upper Bounded Wildcard?
+<mark>**Question:** What Is an Upper Bounded Wildcard?
 
 **Answer:** An upper bounded wildcard is when a wildcard type inherits from a concrete type. This is particularly useful when working with collections and inheritance.
 
@@ -453,7 +429,7 @@ Now, let's introduce an upper bounded wildcard to our add animals method:
 public void addAnimals(Collection<? extends Animal> newAnimals)
 Now if we try again, our code will compile. This is because we are now telling the compiler to accept a collection of any subtype of animal.
 
-**Question:** What Is the Purpose of the Throw and Throws Keywords?
+<mark>**Question:** What Is the Purpose of the Throw and Throws Keywords?
 
 **Answer:** The throws keyword is used to specify that a method may raise an exception during its execution. It enforces explicit exception handling when calling a method:
 
@@ -471,7 +447,7 @@ if (task.isTooComplicated()) {
 }
 ```
 
-**Question:** What Is the Difference Between a Checked and an Unchecked Exception?
+<mark>**Question:** What Is the Difference Between a Checked and an Unchecked Exception?
 
 **Answer:** A checked exception must be handled within a try-catch block or declared in a throws clause; whereas an unchecked exception is not required to be handled nor declared.
 
@@ -479,7 +455,7 @@ Checked and unchecked exceptions are also known as compile-time and runtime exce
 
 All exceptions are checked exceptions, except those indicated by Error, RuntimeException, and their subclasses.
 
-**Question:** What Is the Difference Between an Exception and Error?
+<mark>**Question:** What Is the Difference Between an Exception and Error?
 
 **Answer:** An exception is an event that represents a condition from which is possible to recover, whereas error represents an external situation usually impossible to recover from.
 
@@ -496,13 +472,13 @@ All errors thrown by the JVM are instances of Error or one of its subclasses, th
 
 Although an error can be handled with a try statement, this is not a recommended practice since there is no guarantee that the program will be able to do anything reliably after the error was thrown.
 
-**Question:** What Is a Stacktrace and How Does It Relate to an Exception?
+<mark>**Question:** What Is a Stacktrace and How Does It Relate to an Exception?
 
 **Answer:** A stack trace provides the names of the classes and methods that were called, from the start of the application to the point an exception occurred.
 
 It's a very useful debugging tool since it enables us to determine exactly where the exception was thrown in the application and the original causes that led to it.
 
-**Question:** Why Would You Want to Subclass an Exception?
+<mark>**Question:** Why Would You Want to Subclass an Exception?
 
 **Answer:** If the exception type isn't represented by those that already exist in the Java platform, or if you need to provide more information to client code to treat it in a more precise manner, then you should create a custom exception.
 
@@ -510,7 +486,7 @@ Deciding whether a custom exception should be checked or unchecked depends entir
 
 Also, you should inherit from the most specific Exception subclass that closely relates to the one you want to throw. If there is no such class, then choose Exception as the parent.
 
-**Question:** What Are Annotations? What Are Their Typical Use Cases?
+<mark>**Question:** What Are Annotations? What Are Their Typical Use Cases?
 
 **Answer:** Annotations are metadata bound to elements of the source code of a program and have no effect on the operation of the code they operate.
 
@@ -522,7 +498,7 @@ Their typical uses cases are:
 
 - Runtime processing – annotations can be examined at runtime to customize the behavior of a program
 
-**Question:** How Can You Create an Annotation?
+<mark>**Question:** How Can You Create an Annotation?
 
 **Answer:** Annotations are a form of an interface where the keyword interface is preceded by @, and whose body contains annotation type element declarations that look very similar to methods:
 
@@ -572,7 +548,7 @@ Or only some of them:
 public Element nextElement;
 ```
 
-**Question:** Q6. Is There a Way to Limit the Elements in Which an Annotation Can Be Applied?
+<mark>**Question:** Q6. Is There a Way to Limit the Elements in Which an Annotation Can Be Applied?
 
 **Answer:** Yes, the @Target annotation can be used for this purpose. If we try to use an annotation in a context where it is not applicable, the compiler will issue an error.
 
@@ -600,7 +576,7 @@ public @interface NoTargetAnnotation {
 }
 ```
 
-**Question:** What Are Meta-Annotations?
+<mark>**Question:** What Are Meta-Annotations?
 
 **Answer:** Are annotations that apply to other annotations.
 
@@ -613,7 +589,7 @@ public @interface SimpleAnnotation {
 }
 ```
 
-**Question:** Q9. How Can You Retrieve Annotations? How Does This Relate to Its Retention Policy?
+<mark>**Question:** Q9. How Can You Retrieve Annotations? How Does This Relate to Its Retention Policy?
 
 **Answer:** You can use the Reflection API or an annotation processor to retrieve annotations.
 
@@ -643,39 +619,39 @@ An annotation processor can work with RetentionPolicy.SOURCE, this is described 
 
 RetentionPolicy.CLASS is usable when you're writing a Java bytecode parser.
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
@@ -697,7 +673,7 @@ List
 Set
 
 - doesn't allow duplicate.
-- doesn't maintain any order.
+- order is not guaranteed. 
 - allows only one null.
 
 **Queue vs PriorityQueue**
@@ -710,7 +686,33 @@ Set
 
 **HashSet vs TreeSet**
 
-**Question:** How Is Hashmap Implemented in Java? How Does Its Implementation Use Hashcode and Equals Methods of Objects? What Is the Time Complexity of Putting and Getting an Element from Such Structure?
+HashSet
+
+- Implemented using HashTable.
+- Elements are not ordered.
+- The add, remove, and contains methods have constant time complexity O(1).
+
+TreeSet 
+
+- Implemented using tree structure (red-black tree algo).
+- Elements are ordered.
+- add, remove, and contains methods has time complexity O(log (n)).
+
+Other differences
+
+1) First major difference between HashSet and TreeSet is performance. HashSet is faster than TreeSet and should be preferred choice if sorting of element is not required.
+
+2) Second difference between HashSet and TreeSet is that HashSet allows null object but TreeSet doesn't allow null Object and throw NullPointerException, Why, because TreeSet uses compareTo() method to compare keys and compareTo() will throw java.lang.NullPointerException.
+
+3) Another significant difference between HashSet and TreeSet is that , HashSet is backed by HashMap while TreeSet is backed by NavigableMap in Java.
+
+4) One more difference between HashSet and TreeSet which is worth remembering is that HashSet uses equals() method to compare two object in Set and for detecting duplicates while TreeSet uses compareTo() method for same purpose. if equals() and compareTo() are not consistent, i.e. for two equal object equals should return true while compareTo() should return zero, than it will break contract of Set interface and will allow duplicates in Set implementations like TreeSet
+
+5) Now most important difference between HashSet and TreeSet is ordering. HashSet doesn't guaranteed any order while TreeSet maintains objects in Sorted order defined by either Comparable or Comparator method in Java.
+
+6) TreeSet does not allow to insert Heterogeneous objects. It will throw classCastException at Runtime if trying to add hetrogeneous objects, whereas HashSet allows hetrogeneous objects.
+
+<mark>**Question:** How Is Hashmap Implemented in Java? How Does Its Implementation Use Hashcode and Equals Methods of Objects? What Is the Time Complexity of Putting and Getting an Element from Such Structure?
 
 **Answer:** The HashMap class represents a typical hash map data structure with certain design choices.
 
@@ -726,7 +728,7 @@ HashMap has O(1) complexity, or constant-time complexity, of putting and getting
 
 When the HashMap internal array is filled (more on that in the next question), it is automatically resized to be twice as large. This operation infers rehashing (rebuilding of internal data structures), which is costly, so you should plan the size of your HashMap beforehand.
 
-**Question:** What Is the Purpose of the Initial Capacity and Load Factor Parameters of a Hashmap? What Are Their Default Values?
+<mark>**Question:** What Is the Purpose of the Initial Capacity and Load Factor Parameters of a Hashmap? What Are Their Default Values?
 
 **Answer:** The initialCapacity argument of the HashMap constructor affects the size of the internal data structure of the HashMap, but reasoning about the actual size of a map is a bit tricky. The HashMap‘s internal data structure is an array with the power-of-two size. So the initialCapacity argument value is increased to the next power-of-two (for instance, if you set it to 10, the actual size of the internal array will be 16).
 
@@ -736,13 +738,13 @@ The initialCapacity is 16 by default, and the loadFactor is 0.75 by default, so 
 
 Consequently, it is not trivial to come up with initialCapacity that satisfies your needs. This is why the Guava library has Maps.newHashMapWithExpectedSize() and Sets.newHashSetWithExpectedSize() methods that allow you to build a HashMap or a HashSet that can hold the expected number of elements without resizing.
 
-**Question:** Describe Special Collections for Enums. What Are the Benefits of Their Implementation Compared to Regular Collections?
+<mark>**Question:** Describe Special Collections for Enums. What Are the Benefits of Their Implementation Compared to Regular Collections?
 
 **Answer:** EnumSet and EnumMap are special implementations of Set and Map interfaces correspondingly. You should always use these implementations when you're dealing with enums because they are very efficient.
 
 An EnumSet is just a bit vector with “ones” in the positions corresponding to ordinal values of enums present in the set. To check if an enum value is in the set, the implementation simply has to check if the corresponding bit in the vector is a “one”, which is a very easy operation. Similarly, an EnumMap is an array accessed with enum's ordinal value as an index. In the case of EnumMap, there is no need to calculate hash codes or resolve collisions.
 
-**Question:** What Is the Difference Between Fail-Fast and Fail-Safe Iterators?
+<mark>**Question:** What Is the Difference Between Fail-Fast and Fail-Safe Iterators?
 
 **Answer:** Iterators for different collections are either fail-fast or fail-safe, depending on how they react to concurrent modifications. The concurrent modification is not only a modification of collection from another thread but also modification from the same thread but using another iterator or modifying the collection directly.
 
@@ -750,7 +752,7 @@ Fail-fast iterators (those returned by HashMap, ArrayList, and other non-thread-
 
 Fail-safe iterators (returned by thread-safe collections such as ConcurrentHashMap, CopyOnWriteArrayList) create a copy of the structure they iterate upon. They guarantee safety from concurrent modifications. Their drawbacks include excessive memory consumption and iteration over possibly out-of-date data in case the collection was modified.
 
-**Question:** How Can You Use Comparable and Comparator Interfaces to Sort Collections?
+<mark>**Question:** How Can You Use Comparable and Comparator Interfaces to Sort Collections?
 
 **Answer:** The Comparable interface is an interface for objects that can be compared according to some order. Its single method is compareTo, which operates on two values: the object itself and the argument object of the same type. For instance, Integer, Long, and other numeric types implement this interface. String also implements this interface, and its compareTo method compares strings in lexicographical order.
 
@@ -772,7 +774,7 @@ Collections.sort(list1, (a, b) -> b - a);
 assertEquals(new Integer(5), list1.get(0));
 ```
 
-**Question:** Explain the Difference Between Primitive and Reference Types.
+<mark>**Question:** Explain the Difference Between Primitive and Reference Types.
 
 **Answer:** Reference types inherit from the top java.lang.Object class and are themselves inheritable (except final classes). Primitive types do not inherit and cannot be subclassed.
 
@@ -784,7 +786,7 @@ For instance, to store an int value, a 32-bit memory cell can be used. Reference
 
 The size of an object header can be quite significant in relation to a simple numeric value size. This is why the primitive types were introduced in the first place — to save space on object overhead. The downside is that not everything in Java technically is an object — primitive values do not inherit from Object class.
 
-**Question:** Describe the Different Primitive Types and the Amount of Memory They Occupy.
+<mark>**Question:** Describe the Different Primitive Types and the Amount of Memory They Occupy.
 
 **Answer:** Java has 8 primitive types:
 
@@ -797,7 +799,7 @@ The size of an object header can be quite significant in relation to a simple nu
 - float — 32-bit single precision floating point value corresponding to the IEEE 754 standard,
 - double — 64-bit double precision floating point value corresponding to the IEEE 754 standard.
 
-**Question:** What Is the Difference Between an Abstract Class and an Interface? What Are the Use Cases of One and the Other?
+<mark>**Question:** What Is the Difference Between an Abstract Class and an Interface? What Are the Use Cases of One and the Other?
 
 **Answer:** An abstract class is a class with the abstract modifier in its definition. It can't be instantiated, but it can be subclassed. The interface is a type described with interface keyword. It also cannot be instantiated, but it can be implemented.
 
@@ -811,13 +813,13 @@ An interface specifies some contract that the class agrees to. An implemented in
 
 For instance, if a class implements the Comparable interface, this means that instances of this class may be compared, whatever the main purpose of this class is.
 
-**Question:** What Are the Restrictions on the Members (Fields and Methods) of an Interface Type?
+<mark>**Question:** What Are the Restrictions on the Members (Fields and Methods) of an Interface Type?
 
 **Answer:** An interface can declare fields, but they are implicitly declared as public, static and final, even if you don't specify those modifiers. Consequently, you can't explicitly define an interface field as private. In essence, an interface may only have constant fields, not instance fields.
 
 All methods of an interface are also implicitly public. They also can be either (implicitly) abstract, or default.
 
-**Question:** What Is the Difference Between an Inner Class and a Static Nested Class?
+<mark>**Question:** What Is the Difference Between an Inner Class and a Static Nested Class?
 
 **Answer:** Simply put – a nested class is basically a class defined inside another class.
 
@@ -866,13 +868,13 @@ OuterClass2.StaticNestedClass staticNestedClass = new OuterClass2.StaticNestedCl
 
 ```
 
-**Question:** Does Java Have Multiple Inheritance?
+<mark>**Question:** Does Java Have Multiple Inheritance?
 
 **Answer:** Java does not support the multiple inheritance for classes, which means that a class can only inherit from a single superclass.
 
 But you can implement multiple interfaces with a single class, and some of the methods of those interfaces may be defined as default and have an implementation. This allows you to have a safer way of mixing different functionality in a single class.
 
-**Question:** What Are the Wrapper Classes? What Is Autoboxing?
+<mark>**Question:** What Are the Wrapper Classes? What Is Autoboxing?
 
 **Answer:** For each of the eight primitive types in Java, there is a wrapper class that can be used to wrap a primitive value and use it like an object. Those classes are, correspondingly, Boolean, Byte, Short, Character, Integer, Float, Long, and Double. These wrappers can be useful, for instance, when you need to put a primitive value into a generic collection, which only accepts reference objects.
 
@@ -890,7 +892,7 @@ int value = list.get(0);
 
 ```
 
-**Question:** Describe the Difference Between equals() and ==
+<mark>**Question:** Describe the Difference Between equals() and ==
 
 **Answer:**
 
@@ -904,17 +906,17 @@ equals()
 - Content (object value) comparison (in string class).
 - The equals() method is defined in the java.lang.Object class. By default, it does the reference comparison with == operator. So it is usually overridden in subclasses to provide the specific implementation.
 
-**Question:** What Is Nashorn in Java8?
+<mark>**Question:** What Is Nashorn in Java8?
 
 **Answer:** Nashorn is the new Javascript processing engine for the Java platform that shipped with Java 8. Until JDK 7, the Java platform used Mozilla Rhino for the same purpose, as a Javascript processing engine.
 
 Nashorn provides better compliance with the ECMA normalized JavaScript specification and better runtime performance than its predecessor.
 
-**Question:** Q2. What Is JJS?
+<mark>**Question:** Q2. What Is JJS?
 
 **Answer:** In Java 8, jjs is the new executable or command line tool we use to execute Javascript code at the console.
 
-**Question:** What Is a Stream? How Does It Differ From a Collection?
+<mark>**Question:** What Is a Stream? How Does It Differ From a Collection?
 
 **Answer:** In simple terms, a stream is an iterator whose role is to accept a set of actions to apply on each of the elements it contains.
 
@@ -931,7 +933,7 @@ int sum = Arrays.stream(new int[]{1, 2, 3})
 
 Another important distinction from collections is that streams are inherently lazily loaded and processed.
 
-**Question:** What Is the Difference Between Intermediate and Terminal Operations?
+<mark>**Question:** What Is the Difference Between Intermediate and Terminal Operations?
 
 **Answer:** We combine stream operations into pipelines to process streams. All operations are either intermediate or terminal.
 
@@ -972,7 +974,7 @@ doubling 3
 
 As we can see, the intermediate operations are only triggered when a terminal operation exists.
 
-**Question:** What Is the Difference Between Map and flatMap Stream Operation?
+<mark>**Question:** What Is the Difference Between Map and flatMap Stream Operation?
 
 **Answer:** There is a difference in signature between map and flatMap. Generally speaking, a map operation wraps its return value inside its ordinal type, while flatMap does not.
 
@@ -997,7 +999,7 @@ List<String> phones = people.values().stream()
     .collect(Collectors.toList());
 ```
 
-**Question:** What Is Stream Pipelining in Java 8?
+<mark>**Question:** What Is Stream Pipelining in Java 8?
 
 **Answer:** Stream pipelining is the concept of chaining operations together. We do this by splitting the operations that can happen on a stream into two categories: intermediate operations and terminal operations.
 
@@ -1005,7 +1007,7 @@ Each intermediate operation returns an instance of Stream itself when it runs. T
 
 There must then be a terminal operation which returns a final value and terminates the pipeline.
 
-**Question:** Tell Us About the New Date and Time API in Java 8
+<mark>**Question:** Tell Us About the New Date and Time API in Java 8
 
 **Answer:** The existing classes such as java.util.Date and SimpleDateFormatter aren’t thread-safe, leading to potential concurrency issues for users.
 
@@ -1015,17 +1017,17 @@ These issues and several others have led to the popularity of third-party date a
 
 In order to address these problems and provide better support in JDK, a new date and time API, which is free of these problems, has been designed for Java SE 8 under the package java.time.
 
-**Question:** What Is Garbage Collection and What Are Its Advantages?
+<mark>**Question:** What Is Garbage Collection and What Are Its Advantages?
 
 **Answer:** Garbage collection is the process of looking at heap memory, identifying which objects are in use and which are not, and deleting the unused objects.
 
-**Question:** Are There Any Disadvantages of Garbage Collection?
+<mark>**Question:** Are There Any Disadvantages of Garbage Collection?
 
 **Answer:** Yes. Whenever the garbage collector runs, it has an effect on the application's performance. This is because all other threads in the application have to be stopped to allow the garbage collector thread to effectively do its work.
 
 However, this problem can be greatly reduced or even eliminated through skillful optimization and garbage collector tuning and using different GC algorithms.
 
-**Question:** What Are Stack and Heap? What Is Stored in Each of These Memory Structures, and How Are They Interrelated?
+<mark>**Question:** What Are Stack and Heap? What Is Stored in Each of These Memory Structures, and How Are They Interrelated?
 
 **Answer:** The stack is a part of memory that contains information about nested method calls down to the current position in the program. It also contains all local variables and references to objects on the heap defined in currently executing methods.
 
@@ -1033,7 +1035,7 @@ This structure allows the runtime to return from the method knowing the address 
 
 The heap is a large bulk of memory intended for allocation of objects. When you create an object with the new keyword, it gets allocated on the heap. However, the reference to this object lives on the stack.
 
-**Question:** What Is Generational Garbage Collection and What Makes It a Popular Garbage Collection Approach?
+<mark>**Question:** What Is Generational Garbage Collection and What Makes It a Popular Garbage Collection Approach?
 
 **Answer:** Generational garbage collection can be loosely defined as the strategy used by the garbage collector where the heap is divided into a number of sections called generations, each of which will hold objects according to their “age” on the heap.
 
@@ -1045,7 +1047,7 @@ With generational garbage collection, objects are grouped according to their “
 
 Today, almost all garbage collectors are generational. This strategy is so popular because, over time, it has proven to be the optimal solution.
 
-**Question:** Describe in Detail How Generational Garbage Collection Works
+<mark>**Question:** Describe in Detail How Generational Garbage Collection Works
 
 **Answer:** To properly understand how generational garbage collection works, it is important to first remember how Java heap is structured to facilitate generational garbage collection.
 
@@ -1073,7 +1075,7 @@ After every minor garbage collection cycle, the age of each object is checked. T
 
 This pretty much exhausts the process of garbage collection in the young generation. Eventually, a major garbage collection will be performed on the old generation which cleans up and compacts that space. For each major GC, there are several minor GCs.
 
-**Question:** When Does an Object Become Eligible for Garbage Collection? Describe How the Gc Collects an Eligible Object?
+<mark>**Question:** When Does an Object Become Eligible for Garbage Collection? Describe How the Gc Collects an Eligible Object?
 
 **Answer:** An object becomes eligible for Garbage collection or GC if it is not reachable from any live threads or by any static references.
 
@@ -1081,7 +1083,7 @@ The most straightforward case of an object becoming eligible for garbage collect
 
 Another obvious case is when a parent object is set to null. When a kitchen object internally references a fridge object and a sink object, and the kitchen object is set to null, both fridge and sink will become eligible for garbage collection alongside their parent, kitchen.
 
-**Question:** How Do You Trigger Garbage Collection from Java Code?
+<mark>**Question:** How Do You Trigger Garbage Collection from Java Code?
 
 **Answer:** You, as Java programmer, can not force garbage collection in Java; it will only trigger if JVM thinks it needs a garbage collection based on Java heap size.
 
@@ -1089,11 +1091,11 @@ Before removing an object from memory garbage collection thread invokes finalize
 
 Additionally, there are methods like System.gc() and Runtime.gc() which is used to send request of Garbage collection to JVM but it’s not guaranteed that garbage collection will happen.
 
-**Question:** What Happens When There Is Not Enough Heap Space to Accommodate Storage of New Objects?
+<mark>**Question:** What Happens When There Is Not Enough Heap Space to Accommodate Storage of New Objects?
 
 **Answer:** If there is no memory space for creating a new object in Heap, Java Virtual Machine throws OutOfMemoryError or more specifically java.lang.OutOfMemoryError heap space.
 
-**Question:** Is It Possible to «Resurrect» an Object That Became Eligible for Garbage Collection?
+<mark>**Question:** Is It Possible to «Resurrect» an Object That Became Eligible for Garbage Collection?
 
 **Answer:** When an object becomes eligible for garbage collection, the GC has to run the finalize method on it. The finalize method is guaranteed to run only once, thus the GC flags the object as finalized and gives it a rest until the next cycle.
 
@@ -1101,7 +1103,7 @@ In the finalize method you can technically “resurrect” an object, for exampl
 
 The object, however, would be marked as finalized, so when it would become eligible again, the finalize method would not be called. In essence, you can turn this “resurrection” trick only once for the lifetime of the object. Beware that this ugly hack should be used only if you really know what you're doing — however, understanding this trick gives some insight into how the GC works.
 
-**Question:** Describe Strong, Weak, Soft and Phantom References and Their Role in Garbage Collection.
+<mark>**Question:** Describe Strong, Weak, Soft and Phantom References and Their Role in Garbage Collection.
 
 **Answer:** Much as memory is managed in Java, an engineer may need to perform as much optimization as possible to minimize latency and maximize throughput, in critical applications. Much as it is impossible to explicitly control when garbage collection is triggered in the JVM, it is possible to influence how it occurs as regards the objects we have created.
 
@@ -1139,17 +1141,17 @@ A weak reference can be created in a similar manner using WeakReference class. W
 
 A phantom reference is similar to a weak reference and an object with only phantom references will be collected without waiting. However, phantom references are enqueued as soon as their objects are collected. We can poll the reference queue to know exactly when the object was collected.
 
-**Question:** Suppose We Have a Circular Reference (Two Objects That Reference Each Other). Could Such Pair of Objects Become Eligible for Garbage Collection and Why?
+<mark>**Question:** Suppose We Have a Circular Reference (Two Objects That Reference Each Other). Could Such Pair of Objects Become Eligible for Garbage Collection and Why?
 
 **Answer:** Yes, a pair of objects with a circular reference can become eligible for garbage collection. This is because of how Java's garbage collector handles circular references. It considers objects live not when they have any reference to them, but when they are reachable by navigating the object graph starting from some garbage collection root (a local variable of a live thread or a static field). If a pair of objects with a circular reference is not reachable from any root, it is considered eligible for garbage collection.
 
-**Question:** How Are Strings Represented in Memory?
+<mark>**Question:** How Are Strings Represented in Memory?
 
 **Answer:** A String instance in Java is an object with two fields: a char[] value field and an int hash field. The value field is an array of chars representing the string itself, and the hash field contains the hashCode of a string which is initialized with zero, calculated during the first hashCode() call and cached ever since. As a curious edge case, if a hashCode of a string has a zero value, it has to be recalculated each time the hashCode() is called.
 
 Important thing is that a String instance is immutable: you can't get or modify the underlying char[] array. Another feature of strings is that the static constant strings are loaded and cached in a string pool. If you have multiple identical String objects in your source code, they are all represented by a single instance at runtime.
 
-**Question:** Q15. What Is a Stringbuilder and What Are Its Use Cases? What Is the Difference Between Appending a String to a Stringbuilder and Concatenating Two Strings with a + Operator? How Does Stringbuilder Differ from Stringbuffer?
+<mark>**Question:** Q15. What Is a Stringbuilder and What Are Its Use Cases? What Is the Difference Between Appending a String to a Stringbuilder and Concatenating Two Strings with a + Operator? How Does Stringbuilder Differ from Stringbuffer?
 
 **Answer:** StringBuilder allows manipulating character sequences by appending, deleting and inserting characters and strings. This is a mutable data structure, as opposed to the String class which is immutable.
 
@@ -1157,7 +1159,7 @@ When concatenating two String instances, a new object is created, and strings ar
 
 StringBuffer is different from StringBuilder in that it is thread-safe. If you need to manipulate a string in a single thread, use StringBuilder instead.
 
-**Question:** Q1. What Is a Generic Type Parameter?
+<mark>**Question:** Q1. What Is a Generic Type Parameter?
 
 **Answer:** Type is the name of a class or interface. As implied by the name, a generic type parameter is when a type can be used as a parameter in a class, method or interface declaration.
 
@@ -1189,7 +1191,7 @@ public class IntegerConsumer implements Consumer<Integer> {
 
 In this case, now we can consume integers. We can swap out this type for whatever we require.
 
-**Question:** Q2. What Are Some Advantages of Using Generic Types?
+<mark>**Question:** Q2. What Are Some Advantages of Using Generic Types?
 
 **Answer:** One advantage of using generics is avoiding casts and provide type safety. This is particularly useful when working with collections. Let's demonstrate this:
 
@@ -1225,15 +1227,15 @@ As we can see, by using generics we have a compile type check which prevents Cla
 
 The other advantage is to avoid code duplication. Without generics, we have to copy and paste the same code but for different types. With generics, we do not have to do this. We can even implement algorithms that apply to generic types.
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 Threading/Concurrency <span id="Concurrency"></span>
@@ -1247,7 +1249,7 @@ The Runnable interface has a single run method. It represents a unit of computat
 
 The Callable interface has a single call method and represents a task that has a value. That's why the call method returns a value. It can also throw exceptions. Callable is generally used in ExecutorService instances to start an asynchronous task and then call the returned Future instance to get its value.
 
-**Question:** Describe the Different States of a Thread and When Do the State Transitions Occur.
+<mark>**Question:** Describe the Different States of a Thread and When Do the State Transitions Occur.
 
 **Answer:** The state of a Thread can be checked using the Thread.getState() method. Different states of a Thread are described in the Thread.State enum. They are:
 
@@ -1258,7 +1260,7 @@ The Callable interface has a single call method and represents a task that has a
 - TIMED_WAITING — same as the above, but a thread enters this state after calling timed versions of Thread.sleep(), Object.wait(), Thread.join() and some other methods
 - TERMINATED — a thread has completed the execution of its Runnable.run() method and terminated
 
-**Question:** What Is a Daemon Thread, What Are Its Use Cases? How Can You Create a Daemon Thread?
+<mark>**Question:** What Is a Daemon Thread, What Are Its Use Cases? How Can You Create a Daemon Thread?
 
 **Answer:** A daemon thread is a thread that does not prevent JVM from exiting. When all non-daemon threads are terminated, the JVM simply abandons all remaining daemon threads. Daemon threads are usually used to carry out some supportive or service tasks for other threads, but you should take into account that they may be abandoned at any time.
 
@@ -1273,7 +1275,7 @@ daemon.start();
 
 Curiously, if you run this as a part of the main() method, the message might not get printed. This could happen if the main() thread would terminate before the daemon would get to the point of printing the message. You generally should not do any I/O in daemon threads, as they won't even be able to execute their finally blocks and close the resources if abandoned.
 
-**Question:** What Is the Thread’s Interrupt Flag? How Can You Set and Check It? How Does It Relate to the Interruptedexception?
+<mark>**Question:** What Is the Thread’s Interrupt Flag? How Can You Set and Check It? How Does It Relate to the Interruptedexception?
 
 **Answer:** The interrupt flag, or interrupt status, is an internal Thread flag that is set when the thread is interrupted. To set it, simply call thread.interrupt() on the thread object.
 
@@ -1281,13 +1283,13 @@ If a thread is currently inside one of the methods that throw InterruptedExcepti
 
 If a thread is not inside such method and thread.interrupt() is called, nothing special happens. It is thread's responsibility to periodically check the interrupt status using static Thread.interrupted() or instance isInterrupted() method. The difference between these methods is that the static Thread.interrupted() clears the interrupt flag, while isInterrupted() does not.
 
-**Question:** What Are Executor and Executorservice? What Are the Differences Between These Interfaces?
+<mark>**Question:** What Are Executor and Executorservice? What Are the Differences Between These Interfaces?
 
 **Answer:** Executor and ExecutorService are two related interfaces of java.util.concurrent framework. Executor is a very simple interface with a single execute method accepting Runnable instances for execution. In most cases, this is the interface that your task-executing code should depend on.
 
 ExecutorService extends the Executor interface with multiple methods for handling and checking the lifecycle of a concurrent task execution service (termination of tasks in case of shutdown) and methods for more complex asynchronous task handling including Futures.
 
-**Question:** What Are the Available Implementations of Executorservice in the Standard Library?
+<mark>**Question:** What Are the Available Implementations of Executorservice in the Standard Library?
 
 **Answer:** The ExecutorService interface has three standard implementations:
 
@@ -1297,7 +1299,7 @@ ExecutorService extends the Executor interface with multiple methods for handlin
 
 - ForkJoinPool is a special ExecutorService for dealing with recursive algorithms tasks. If you use a regular ThreadPoolExecutor for a recursive algorithm, you will quickly find all your threads are busy waiting for the lower levels of recursion to finish. The ForkJoinPool implements the so-called work-stealing algorithm that allows it to use available threads more efficiently.
 
-**Question:** What Is Java Memory Model (Jmm)? Describe Its Purpose and Basic Ideas.
+<mark>**Question:** What Is Java Memory Model (Jmm)? Describe Its Purpose and Basic Ideas.
 
 **Answer:** Java Memory Model is a part of Java language specification described in Chapter 17.4. It specifies how multiple threads access common memory in a concurrent Java application, and how data changes by one thread are made visible to other threads. While being quite short and concise, JMM may be hard to grasp without strong mathematical background.
 
@@ -1326,7 +1328,7 @@ Happens-before consistency — a set of actions is HB-consistent if every read o
 
 For a given program, we can observe multiple different executions with various outcomes. But if a program is correctly synchronized, then all of its executions appear to be sequentially consistent, meaning you can reason about the multithreaded program as a set of actions occurring in some sequential order. This saves you the trouble of thinking about under-the-hood reorderings, optimizations or data caching.
 
-**Question:** What Is a Volatile Field and What Guarantees Does the Jmm Hold for Such Field?
+<mark>**Question:** What Is a Volatile Field and What Guarantees Does the Jmm Hold for Such Field?
 
 **Answer:** A volatile field has special properties according to the Java Memory Model (see Q9). The reads and writes of a volatile variable are synchronization actions, meaning that they have a total ordering (all threads will observe a consistent order of these actions). A read of a volatile variable is guaranteed to observe the last write to this variable, according to this order.
 
@@ -1334,7 +1336,7 @@ If you have a field that is accessed from multiple threads, with at least one th
 
 Another guarantee for volatile is atomicity of writing and reading 64-bit values (long and double). Without a volatile modifier, a read of such field could observe a value partly written by another thread.
 
-**Question:** Which of the Following Operations Are Atomic?
+<mark>**Question:** Which of the Following Operations Are Atomic?
 
 **Answer:**
 
@@ -1347,13 +1349,13 @@ A write to an int (32-bit) variable is guaranteed to be atomic, whether it is vo
 
 The increment operation is usually done in multiple steps (retrieving a value, changing it and writing back), so it is never guaranteed to be atomic, wether the variable is volatile or not. If you need to implement atomic increment of a value, you should use classes AtomicInteger, AtomicLong etc.
 
-**Question:** What Special Guarantees Does the Jmm Hold for Final Fields of a Class?
+<mark>**Question:** What Special Guarantees Does the Jmm Hold for Final Fields of a Class?
 
 **Answer:** JVM basically guarantees that final fields of a class will be initialized before any thread gets hold of the object. Without this guarantee, a reference to an object may be published, i.e. become visible, to another thread before all the fields of this object are initialized, due to reorderings or other optimizations. This could cause racy access to these fields.
 
 This is why, when creating an immutable object, you should always make all its fields final, even if they are not accessible via getter methods.
 
-**Question:** What Is the Meaning of a Synchronized Keyword in the Definition of a Method? of a Static Method? Before a Block?
+<mark>**Question:** What Is the Meaning of a Synchronized Keyword in the Definition of a Method? of a Static Method? Before a Block?
 
 **Answer:** The synchronized keyword before a block means that any thread entering this block has to acquire the monitor (the object in brackets). If the monitor is already acquired by another thread, the former thread will enter the BLOCKED state and wait until the monitor is released.
 
@@ -1379,13 +1381,13 @@ static synchronized void staticMethod() {
 }
 ```
 
-**Question:** If Two Threads Call a Synchronized Method on Different Object Instances Simultaneously, Could One of These Threads Block? What If the Method Is Static?
+<mark>**Question:** If Two Threads Call a Synchronized Method on Different Object Instances Simultaneously, Could One of These Threads Block? What If the Method Is Static?
 
 **Answer:** If the method is an instance method, then the instance acts as a monitor for the method. Two threads calling the method on different instances acquire different monitors, so none of them gets blocked.
 
 If the method is static, then the monitor is the Class object. For both threads, the monitor is the same, so one of them will probably block and wait for another to exit the synchronized method.
 
-**Question:**  What Is the Purpose of the Wait, Notify and Notifyall Methods of the Object Class?
+<mark>**Question:**  What Is the Purpose of the Wait, Notify and Notifyall Methods of the Object Class?
 
 **Answer:** A thread that owns the object's monitor (for instance, a thread that has entered a synchronized section guarded by the object) may call object.wait() to temporarily release the monitor and give other threads a chance to acquire the monitor. This may be done, for instance, to wait for a certain condition.
 
@@ -1427,7 +1429,7 @@ public class BlockingQueue<T> {
 }
 ```
 
-**Question:** Describe the Conditions of Deadlock, Livelock, and Starvation. Describe the Possible Causes of These Conditions.
+<mark>**Question:** Describe the Conditions of Deadlock, Livelock, and Starvation. Describe the Possible Causes of These Conditions.
 
 **Answer:**
 
@@ -1437,25 +1439,25 @@ public class BlockingQueue<T> {
 
 - Starvation is a case of a thread unable to acquire resource because other thread (or threads) occupy it for too long or have higher priority. A thread cannot make progress and thus is unable to fulfill useful work.
 
-**Question:** Describe the Purpose and Use-Cases of the Fork/Join Framework.
+<mark>**Question:** Describe the Purpose and Use-Cases of the Fork/Join Framework.
 
 **Answer:** The fork/join framework allows parallelizing recursive algorithms. The main problem with parallelizing recursion using something like ThreadPoolExecutor is that you may quickly run out of threads because each recursive step would require its own thread, while the threads up the stack would be idle and waiting.
 
 The fork/join framework entry point is the ForkJoinPool class which is an implementation of ExecutorService. It implements the work-stealing algorithm, where idle threads try to “steal” work from busy threads. This allows to spread the calculations between different threads and make progress while using fewer threads than it would require with a usual thread pool.
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 
-**Question:**
+<mark>**Question:**
 
 **Answer:**
 Others
