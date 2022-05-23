@@ -14,35 +14,37 @@ Basics <span id="Basics"></span>
 **Oops Concepts**
 
 Main principals
-- Encapsulation - binding code & data together. 
+
+- Encapsulation - binding code & data together.
 
     e.g. Java bean is the fully encapsulated class because all the data members are private here and can only be access via getter & setter.
 
 - Abstraction - hides internal implementation details.
-e.g.   
-    -   abstract class - partial abstration 
-    -   Interface - complete abstraction
+e.g.
+  - abstract class - partial abstration
+  - Interface - complete abstraction
 
 - Polymorphism - Many name e.g. method overloading & overriding.
 
 - Inheritance - reusability e.g. class can be extended to another class.
 
 Secondary principals
-- association 
-    -   Act of establishig a relationship between two unrelated classes.
 
-    -   Can be a one-to-one, one-to-many, many-to-one, or many-to-many relationship
+- association
+  - Act of establishig a relationship between two unrelated classes.
 
-- aggregation 
-    -   One-directional association
-    -   Represents a HAS-A relationship between two classes
-    -   Only one class is dependent on the other
+  - Can be a one-to-one, one-to-many, many-to-one, or many-to-many relationship
+
+- aggregation
+  - One-directional association
+  - Represents a HAS-A relationship between two classes
+  - Only one class is dependent on the other
 
 - composition
-    -   A restricted form of aggregation
-    -   Represents a PART-OF relationship between two classes
-    -   Both classes are dependent on each other
-    -   If one class ceases to exist, the other can’t survive alone
+  - A restricted form of aggregation
+  - Represents a PART-OF relationship between two classes
+  - Both classes are dependent on each other
+  - If one class ceases to exist, the other can’t survive alone
 
 **Question:** Final Keyword?
 
@@ -685,6 +687,7 @@ Collections <span id="Collections"></span>
 **List vs Set**
 
 List
+
 - allows duplicates.
 - maintains the insertion order.
 - allows any number of null values.
@@ -692,11 +695,10 @@ List
 - Any List can be made synchronized with method Collections.synchronizedList()
 
 Set
+
 - doesn't allow duplicate.
 - doesn't maintain any order.
 - allows only one null.
-
-
 
 **Queue vs PriorityQueue**
 
@@ -890,13 +892,15 @@ int value = list.get(0);
 
 **Question:** Describe the Difference Between equals() and ==
 
-**Answer:** 
+**Answer:**
 
-== 
-- Reference (memory address of the object) comparison. 
+==
+
+- Reference (memory address of the object) comparison.
 - Allows to compare primitive values.
 
-equals() 
+equals()
+
 - Content (object value) comparison (in string class).
 - The equals() method is defined in the java.lang.Object class. By default, it does the reference comparison with == operator. So it is usually overridden in subclasses to provide the specific implementation.
 
