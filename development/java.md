@@ -24,9 +24,11 @@ e.g.
   - abstract class - partial abstration
   - Interface - complete abstraction
 
-- Polymorphism - Many name e.g. method overloading & overriding.
+- Polymorphism - One name multiple form
+    - method overloading (compile time): happens in same class when multiple methods are defined with same name but different parameters.
+    - method overriding (runtime): happens in subclass when parent class's method is defined in subclass as well.
 
-- Inheritance - reusability e.g. class can be extended to another class.
+- Inheritance - reusability e.g. class can extend to another class.
 
 Secondary principals
 
@@ -45,6 +47,26 @@ Secondary principals
   - Represents a PART-OF relationship between two classes
   - Both classes are dependent on each other
   - If one class ceases to exist, the other can’t survive alone
+
+
+======================
+
+
+    
+    Non-static members of a class are called instance members.
+    Static members of a class are called class members.
+
+    
+
+
+
+
+
+
+
+
+
+=======================
 
 <mark>**Question:** Final Keyword?
 
@@ -68,6 +90,8 @@ e.g. Iterator interface. In Java 8 it received two additional methods, forEach, 
 
 Static members (method & field) are resolved at compile time.
 
+Static methods can not be overridden in child as they are part of parent class only. However they are accessible in child class.
+
 <mark>**Question:** May a Class Be Declared Abstract If It Does Not Have Any Abstract Members? What Could Be the Purpose of Such Class?
 
 **Answer:** Yes, a class can be declared abstract even if it does not contain any abstract members. As an abstract class, it cannot be instantiated, but it can serve as a root object of some hierarchy, providing methods that can be useful to its implementations.
@@ -77,7 +101,7 @@ Static members (method & field) are resolved at compile time.
 **Answer:**
 
 - Overriding of a method is done in a subclass when a  method is defined with the same signature as in superclass.
-- Runtime polymorphism.
+- Overriding is Runtime polymorphism.
 
 - Overloading of a method happens in the same class.
 
@@ -93,7 +117,7 @@ Static members (method & field) are resolved at compile time.
 
 <mark>**Question:** What Is an Immutable Class, and How Can You Create One?
 
-**Answer:** An instance of an immutable class cannot be changed after it's created. By changing we mean mutating the state by modifying the values of the fields of the instance. Immutable classes have many advantages: they are thread-safe, and it is much easier to reason about them when you have no mutable state to consider.
+**Answer:** An instance of an immutable class cannot be changed after it's created. By changing we mean mutating the state by modifying the values of the fields of the instance. Immutable classes have many advantages: they are thread-safe.
 
 To make a class immutable, you should ensure the following:
 
@@ -700,7 +724,7 @@ TreeSet
 
 Other differences
 
-1) First major difference between HashSet and TreeSet is performance. HashSet is faster than TreeSet and should be preferred choice if sorting of element is not required.
+1) HashSet is faster than TreeSet and should be preferred choice if sorting of element is not required.
 
 2) Second difference between HashSet and TreeSet is that HashSet allows null object but TreeSet doesn't allow null Object and throw NullPointerException, Why, because TreeSet uses compareTo() method to compare keys and compareTo() will throw java.lang.NullPointerException.
 

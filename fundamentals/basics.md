@@ -320,3 +320,10 @@ Encode and escape and melacious character in the output data which is being sent
 
 Owasp dependency check.
 Secure database access
+
+
+## DRY & KISS
+
+DRY stands for “Don's Repeat Yourself”. This principle states that a piece of code should not be repeated across the software. The rationale behind this principle is to reduce duplication and increase reusability. However, please note that we should be careful in adopting this rather too literally. Some duplication can actually improve code readability and maintainability.
+
+KISS stands for “Keep It Simple, Stupid”. This principle states that we should try to keep the code as simple as possible. This makes it easy to understand and maintain over time. Following some of the principles mentioned earlier, if we keep our classes and methods focussed and small, this will lead to simpler code.
