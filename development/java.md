@@ -724,7 +724,7 @@ TreeSet
 
 Other differences
 
-1) HashSet is faster than TreeSet and should be preferred choice if sorting of element is not required.
+1) First major difference between HashSet and TreeSet is performance. HashSet is faster than TreeSet and should be preferred choice if sorting of element is not required.
 
 2) Second difference between HashSet and TreeSet is that HashSet allows null object but TreeSet doesn't allow null Object and throw NullPointerException, Why, because TreeSet uses compareTo() method to compare keys and compareTo() will throw java.lang.NullPointerException.
 
